@@ -17,11 +17,19 @@ var omikuji = {
     }
 }
 
-//おみくじボタンを押す→おみくじの結果をコンソールに表示する
+//おみくじボタンを押す→おみくじの結果を画面に表示する
+var getOmikuji = document.getElementById('getOmikuji');
 
-////result = ['大吉','吉','中吉','小吉','凶'];
-//rnum = Math.floor(Math.random() * result.length);
-//console.log(rnum);
-//rs2 = result[Math.floor(Math.random() * result.length)];
-//console.log(rs2);
-console.log('おみくじの結果：' + omikuji.getResult() );
+//出力先の設定
+var viewResult = document.createElement('div');
+var parent = getOmikuji.parentElement;
+parent.insertBefore(viewResult, null);
+
+//ボタンを押したときの処理
+getOmikuji.addEventListener('click', function() {
+  viewResult.innerHTML = '<p> おみくじの結果：' + omikuji.getResult();
+})
+
+
+
+//
