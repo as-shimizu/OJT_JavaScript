@@ -19,8 +19,23 @@ textarea.addEventListener('keyup', function() {
   message.innerHTML = '<p>あと「' + (maxLeng - letterLeng) + '」文字入力できます</p>';
 });
 
+//残り時間の表示
+var rimitTime = 3; //3秒に設定
+var timeMsg = document.createElement('div');
+parent.insertBefore(timeMsg, null);
+
 
 //お問い合わせボタンを押すとフォームが出現する
 button.addEventListener('click', function() {
   form.style.display = 'block';
+
+　//お問い合わせボタンを押した後制限時間が設定する
+  var timerID = setInterval(function() {
+    timeMsg.innerHTML = '<p> 制限時間：' + rimitTime + '秒</p>';
+　　if(rimitTime == 0) {
+      alert('制限時間終了');
+      clearInterval(timerID);
+    }
+    rimitTime--
+  },1000);
 });
