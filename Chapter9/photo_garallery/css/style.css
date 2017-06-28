@@ -10,7 +10,7 @@ img {
 
 /*メイン写真の設定*/
 #main {
-  margin: auto;
+  margin: 30px auto;
   padding-top: 40px;
   width: 500px;
 }
@@ -19,6 +19,7 @@ img {
   border: 7px solid #FFFFFF;
   height: 400px;
   width:  600px;
+  
 }
 
 #main h1 {
@@ -28,10 +29,19 @@ img {
 }
 
 /*サムネイル写真の設定*/
-#sub img {
+.off {
   border-radius: 400px;
   height: 100px;
   width: 100px;
-  margin: 10px;
+  margin: 20px;
   border: 2px solid #FFFFFF;
+}
+
+/*サムネイル写真にマウスがホバーしたとき*/
+.on {
+  border-radius: 400px;
+  height: 120px;
+  width: 120px;
+  margin: 10px;
+  border: 4px solid #FFFFFF;
 }

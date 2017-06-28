@@ -29,5 +29,30 @@ for(var i = 0; i < album.length; i++) {
   subIMG = document.createElement('img');
   subIMG.setAttribute('src', album[i].src);
   subIMG.setAttribute('alt', album[i].msg);
+  subIMG.setAttribute('class', 'off');
   sub.insertBefore(subIMG,null);
 }
+
+
+//クリックした写真をmainに表示する
+//写真をクリック→mainIMGとmainMSGを書き換える
+sub.addEventListener('click', function(event) {
+  if (event.target.src) {
+    mainIMG.src = event.target.src;
+    mainMSG.innerText = event.target.alt;
+  }
+})
+
+sub.addEventListener('mouseover', function(event) {
+  if (event.target.src) {
+    theTarget = event.target
+    theTarget.className = 'on';
+  }
+})
+
+sub.addEventListener('mouseout', function(event) {
+  if (event.target.src) {
+    theTarget = event.target
+    theTarget.className = 'off';
+  }
+})
