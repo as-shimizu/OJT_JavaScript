@@ -15,12 +15,12 @@ var mainIMG = document.createElement('img');
 mainIMG.setAttribute('src', album[0].src);
 mainIMG.setAttribute('alt', album[0].msg);
 
-var mainMSG = document.createElement('p');
+var mainMSG = document.createElement('h1');
 mainMSG.innerText = mainIMG.alt;
 
 var main = document.getElementById('main');
-main.insertBefore(mainIMG,null);
 main.insertBefore(mainMSG,null);
+main.insertBefore(mainIMG,null);
 
 //その他の写真(sub)を表示
 var sub = document.getElementById('sub');

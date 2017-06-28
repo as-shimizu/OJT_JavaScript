@@ -1,0 +1,37 @@
+body {
+  background-color: #666666 ;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+img {
+  box-shadow: 0px 0px 14px #000000;
+}
+
+/*メイン写真の設定*/
+#main {
+  margin: auto;
+  padding-top: 40px;
+  width: 500px;
+}
+
+#main img {
+  border: 7px solid #FFFFFF;
+  height: 400px;
+  width:  600px;
+}
+
+#main h1 {
+  color: #FFFFFF;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/*サムネイル写真の設定*/
+#sub img {
+  border-radius: 400px;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  border: 2px solid #FFFFFF;
+}
