@@ -14,6 +14,7 @@ $(function () {
   });
 
   //上に戻るボタンを無効化する→アニメーション設定
+  //0.5秒かけて上まで戻る
   topBtn.click(function() {
     event.preventDefault();
     $('body,html').animate({
