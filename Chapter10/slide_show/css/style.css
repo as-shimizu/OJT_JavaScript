@@ -1,0 +1,13 @@
+body {
+  background-color: #444444;
+}
+
+.slideshow {
+  width: 500px;
+  margin: auto;
+}
+
+.slideshow img {
+  height: 400px;
+  width: 600px;
+}
