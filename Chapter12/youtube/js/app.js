@@ -11,4 +11,23 @@ url += '&videoSyndicated=true';
 url += '&maxResults=6';
 url += '&key=' + key;
 
-console.log(url);
+$(function () {
+  //youtubeの動画検索
+  $.ajax({
+    url: url,
+    dataType : 'jsonp'
+
+  //通信できたとき
+  }).done(function(data) {
+    if (data.items) {
+      //データ取得できたとき
+    } else {
+　　　//テータがなかったとき
+      console.log(data);
+      alert('該当するデータが見つかりませんでした');
+    }
+ //通信できなかったとき
+  }).fail(function(data) {
+    alert('通信に失敗しました');
+  });
+});
