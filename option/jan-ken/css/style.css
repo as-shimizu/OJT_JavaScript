@@ -1,0 +1,23 @@
+body {
+  background-color: #FFD7CB;
+  text-align: center;
+}
+
+#select {
+  text-align: center;
+}
+
+#hand * {
+  border: solid 1px #AAAAAA;
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+  width: 200px;
+}
+
+#hand dd {
+  background: #EEEEEE;
+  border: solid 1px #AAAAAA;
+  text-align: center;
+  display: none;
+}
