@@ -1,14 +1,15 @@
+//変数設定
+var GU = 1;
+var CHOKI = 2;
+var PA = 3;
+var winlow = 0;　//勝ち負け（あいこ：１　勝ち：２　負け：３）
+var count = 0;　//試合回数
 
 $(function () {
   //""手を選択してください"をクリックしたら選択肢が現れる
   $('#hand dt').click(function() {
     $('#hand dd').slideToggle();
   });
-
-  //ジャンケンの手に番号を設定
-  var GU = 1;
-  var CHOKI = 2;
-  var PA = 3;
 
   //手を取得
   $('#gu').click(function() {
@@ -29,8 +30,10 @@ $(function () {
 
 });
 
-
+//関数の設定
+//じゃんけん1回行う関数
 function janken (hand) {
+  count++
   //コンピュータの手を決める
   var com = Math.floor(Math.random() *3) + 1;
   //コンピュータの手の名前
@@ -39,7 +42,8 @@ function janken (hand) {
   //結果判定
   var winlow = result(hand,com);
   var msgResult = message(hand, com);
-  msgResult = msgResult + 'コンピュータの出した手は「' + hd + '」でした'
+  msgResult = count + '回戦：' + msgResult + 'コンピュータの出した手は「' + hd + '」でした'
+
 
   //結果の出力
   var viewResult = document.createElement('p');
@@ -95,15 +99,15 @@ function message(hand, com) {
 function handName(hd) {
   var haName = "";
   switch (hd) {
-    case 1:
+    case GU:
       hd = "グー";
       return hd;
 
-    case 2:
+    case CHOKI:
       hd = "チョキ";
       return hd;
 
-    case 3:
+    case PA:
       hd = "パー";
       return hd;
   }
