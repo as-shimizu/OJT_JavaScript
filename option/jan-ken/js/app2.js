@@ -2,10 +2,17 @@
 var GU = 1;
 var CHOKI = 2;
 var PA = 3;
-var winlow = 0;　//勝ち負け（あいこ：１　勝ち：２　負け：３）
 var count = 0;　//試合回数
-var me =document.getElementById("me");
-var com =document.getElementById("com");
+var win = 0; //勝った回数
+var winlow = 0;　//勝ち負け（あいこ：１　勝ち：２　負け：３）
+var me =document.getElementById("me");  //自分の手
+var com =document.getElementById("com");  //  相手の手
+
+//結果の出力
+var viewAllRes = document.createElement('p');
+viewAllRes.innerText = count + '試合中' + win + '回勝ちました';
+var parent = document.getElementById("select");
+parent.insertBefore(viewAllRes,null);
 
 $(function () {
   //""手を選択してください"をクリックしたら選択肢が現れる
@@ -16,19 +23,19 @@ $(function () {
   //手を取得
   $('#gu').click(function() {
     me.src = "image/gu.png";
-    $('#me').slideToggle();
+    $('#me').show("slow");
     setTimeout("janken(GU)",1000);
   });
 
   $('#choki').click(function() {
       me.src = "image/choki.png";
-      $('#me').slideToggle();
+      $('#me').show("slow");
     setTimeout("janken(CHOKI)",1000);
   });
 
   $('#pa').click(function() {
       me.src = "image/pa.png";
-      $('#me').slideToggle();
+      $('#me').show("slow");
     setTimeout("janken(PA)",1000);
   });
 
@@ -45,10 +52,14 @@ function janken (hand) {
   var hd = handName(com);
 
   //結果判定
-  $('#com').slideToggle();
-  var winlow = result(hand,com);
+  $('#com').show("slow");
+  winlow = result(hand,com);
   var msgResult = message(hand, com);
-  msgResult = count + '回戦：' + msgResult + 'コンピュータの出した手は「' + hd + '」でした'
+  msgResult = count + '回戦：' + msgResult
+
+  if(winlow===2) {
+    win++
+  }
 
 
   //結果の出力
@@ -56,6 +67,9 @@ function janken (hand) {
   viewResult.innerText = msgResult;
   var parent = document.getElementById("result");
   parent.insertBefore(viewResult,null);
+  $('#result').show("slow");
+  
+  viewAllRes.innerText = count + '試合中' + win + '回勝ちました';
 }
 
 //結果判定の関数

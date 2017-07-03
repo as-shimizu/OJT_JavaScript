@@ -25,6 +25,15 @@ body {
   display: none;
 }
 
+#result {
+  display: none;
+}
+
+#image {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 #me {
   display: none;
   width: 150px;

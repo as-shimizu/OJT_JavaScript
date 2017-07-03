@@ -9,16 +9,22 @@
 
   <body>
     <h3>じゃんけん</h3>
-    <dl id="hand">
-      <dt>手を選択してください</dt>
-      <dd id="gu">グー</dd>
-      <dd id="choki">チョキ</dd>
-      <dd id="pa">パー</dd>
-    </dl>
+    <div id="select">
+      <dl id="hand">
+        <dt>手を選択してください</dt>
+        <dd id="gu">グー</dd>
+        <dd id="choki">チョキ</dd>
+        <dd id="pa">パー</dd>
+      </dl>
+    </div>
 
     <div id="image">
-      <img src="image/gu.png" alt="" id="me">
-      <img src="image/gu.png" alt="" id="com">
+      <table>
+        <tr>
+          <td><img src="image/gu.png" alt="" id="me"></td>
+          <td><img src="image/gu.png" alt="" id="com"></td>
+        </tr>
+      </table>
     </div>
     <div id="result"></div>
     <script src="js/jquery-3.2.1.js"></script>
