@@ -26,7 +26,6 @@ $(function () {
     janken(hand);
   });
 
-
 });
 
 
@@ -55,18 +54,17 @@ function result(hand, com) {
   //あいこの場合
   if (hand === com) {
     winlow = 1;
-    return winlow;
 
   //handが勝った場合
   } else if (com - hand ===1 || com - hand === -2) {
     winlow = 2;
-    return winlow;
 
   //handが負けた場合
   } else {
     winlow = 3;
-    return winlow;
   }
+  
+  return winlow;
 }
 
 //結果のメッセージを作成する関数
@@ -77,34 +75,32 @@ function message(hand, com) {
   //あいこの場合
   if ( winlow === 1) {
     msgResult = "あいこでした。";
-    return  msgResult;
 
   //勝った場合
   } else if (winlow === 2) {
     msgResult = "勝ちました。";
-    return  msgResult;
 
   //負けた場合
   } else if (winlow === 3) {
       msgResult = "負けました。";
-      return  msgResult;
   }
+  return  msgResult;
 }
 
 //手の名前を取得する関数
 function handName(hd) {
   var haName = "";
   switch (hd) {
-    case 1:
+    case 1:		// TODO : Use constant. I'm not sure what is "1"?
       hd = "グー";
-      return hd;
-
+      break;
     case 2:
       hd = "チョキ";
-      return hd;
-
+      break;
     case 3:
       hd = "パー";
-      return hd;
+      break;
   }
+  return hd;
+
 }
