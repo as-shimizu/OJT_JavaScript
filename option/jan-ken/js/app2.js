@@ -4,6 +4,8 @@ var CHOKI = 2;
 var PA = 3;
 var winlow = 0;　//勝ち負け（あいこ：１　勝ち：２　負け：３）
 var count = 0;　//試合回数
+var me =document.getElementById("me");
+var com =document.getElementById("com");
 
 $(function () {
   //""手を選択してください"をクリックしたら選択肢が現れる
@@ -13,18 +15,21 @@ $(function () {
 
   //手を取得
   $('#gu').click(function() {
-    var hand = GU;
-    janken(hand);
+    me.src = "image/gu.png";
+    $('#me').slideToggle();
+    setTimeout("janken(GU)",1000);
   });
 
   $('#choki').click(function() {
-    var hand = CHOKI;
-    janken(hand);
+      me.src = "image/choki.png";
+      $('#me').slideToggle();
+    setTimeout("janken(CHOKI)",1000);
   });
 
   $('#pa').click(function() {
-    var hand = PA;
-    janken(hand);
+      me.src = "image/pa.png";
+      $('#me').slideToggle();
+    setTimeout("janken(PA)",1000);
   });
 
 
@@ -40,6 +45,7 @@ function janken (hand) {
   var hd = handName(com);
 
   //結果判定
+  $('#com').slideToggle();
   var winlow = result(hand,com);
   var msgResult = message(hand, com);
   msgResult = count + '回戦：' + msgResult + 'コンピュータの出した手は「' + hd + '」でした'
@@ -101,14 +107,17 @@ function handName(hd) {
   switch (hd) {
     case GU:
       hd = "グー";
+      com.src = "image/gu.png";
       return hd;
 
     case CHOKI:
       hd = "チョキ";
+      com.src = "image/choki.png";
       return hd;
 
     case PA:
       hd = "パー";
+      com.src = "image/pa.png";
       return hd;
   }
 }

@@ -24,3 +24,15 @@ body {
   text-align: center;
   display: none;
 }
+
+#me {
+  display: none;
+  width: 150px;
+  height: 140px;
+}
+
+#com {
+  display: none;
+  width: 150px;
+  height: 140px;
+}
