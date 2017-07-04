@@ -15,9 +15,35 @@ body {
   width: 200px;
 }
 
+#hand {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 #hand dd {
   background: #EEEEEE;
   border: solid 1px #AAAAAA;
   text-align: center;
   display: none;
+}
+
+#result {
+  display: none;
+}
+
+#image {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#me {
+  display: none;
+  width: 150px;
+  height: 140px;
+}
+
+#com {
+  display: none;
+  width: 150px;
+  height: 140px;
 }
