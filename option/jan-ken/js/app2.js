@@ -68,7 +68,6 @@ function janken (hand) {
   var parent = document.getElementById("result");
   parent.insertBefore(viewResult,null);
   $('#result').show("slow");
-  
   viewAllRes.innerText = count + '試合中' + win + '回勝ちました';
 }
 

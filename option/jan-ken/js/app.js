@@ -30,9 +30,8 @@ function input() {
   if(hand !== GU && hand !== CHOKI && hand !== PA ) {
     alert('入力値をうまく認識できませんでした。ブラウザを再読み込みすると、もう一度挑戦できます。');
     return undefined;
-  } else {
-    return hand;
   }
+  return hand;
 }
 
 
@@ -42,16 +41,15 @@ function handName(hd) {
   switch (hd) {
     case GU:
       hd = "グー";
-      return hd;
-
+      break;
     case CHOKI:
       hd = "チョキ";
-      return hd;
-
+      break;    
     case PA:
       hd = "パー";
-      return hd;
+      break;
   }
+  return hd;
 }
 
 //結果判定の関数
@@ -61,18 +59,14 @@ function result(hand, com) {
   //あいこの場合
   if (hand === com) {
     winlow = 1;
-    return winlow;
-
   //handが勝った場合
   } else if (com - hand ===1 || com - hand === -2) {
     winlow = 2;
-    return winlow;
-
   //handが負けた場合
   } else {
     winlow = 3;
-    return winlow;
   }
+  return winlow;
 }
 
 //結果のメッセージを作成する関数
@@ -83,18 +77,14 @@ function message(hand, com) {
   //あいこの場合
   if ( winlow === 1) {
     msgResult = "あいこでした";
-    return  msgResult;
-
   //勝った場合
   } else if (winlow === 2) {
     msgResult = "勝ちました";
-    return  msgResult;
-
   //負けた場合
   } else if (winlow === 3) {
-      msgResult = "負けました";
-      return  msgResult;
+    msgResult = "負けました";
   }
+  return  msgResult;
 }
 
 //ジャンケンを1回行う関数
