@@ -9,7 +9,12 @@ $(function () {
     var target = Number(textarea);
 
     //線形探索で検索する
+    var startTime = new Date(); //開始時間の取得
     var msg = linerResearch(data, target);
+    var endTime = new Date();　//終了時間の取得
+    var time = endTime.getTime() - startTime.getTime();
+    console.log(endTime.getTime()); 
+    console.log(startTime.getTime());
 
     //結果出力
     var result = document.getElementById("result");
