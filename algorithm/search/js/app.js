@@ -1,22 +1,41 @@
 
 var data = getCSV("odd.csv");
 
+$(function () {
+  //検索ボタンが押された時
+  $('#search').click(function() {
+    //検索値の取得
+    var textarea = document.getElementById("target").value;
+    var target = Number(textarea);
+
+    //線形探索で検索する
+    var msg = linerResearch(data, target);
+
+    //結果出力
+    var result = document.getElementById("result");
+    result.innerText = msg;
+    $('#result').show();
+  })
+})
 
 
 //（１）線形探索
 function linerResearch (data,target) {
   var num = -1;
   for (var i=0; i<data.length; i++) {
-    if(data[i]===target) {
-      num = i
+    if(data[i]==target) {
+      num = i+1
       break;
     }
   }
   //検索する数がリストになかった場合
-  if (num<0) {
-    num = null;
+  var msg = '';
+  if (num>0) {
+    msg = target + 'はリストの' + num + '番目でした'
+  } else {
+    msg = target + 'はリストに存在しませんでした'
   }
-  return num;
+  return msg;
 }
 
 

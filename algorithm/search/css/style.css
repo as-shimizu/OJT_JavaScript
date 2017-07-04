@@ -1,0 +1,8 @@
+body {
+  background-color: #AAAAAA;
+  text-align: center;
+}
+
+#result {
+  display: none;
+}
