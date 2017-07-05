@@ -10,22 +10,33 @@ $(function () {
 
     //線形探索で検索する
     var startTime = new Date(); //開始時間の取得
-    var msg = linerResearch(data, target);
+    var msg = linerSearch(data, target);
     var endTime = new Date();　//終了時間の取得
     var time = endTime.getTime() - startTime.getTime();
-    console.log(endTime.getTime()); 
-    console.log(startTime.getTime());
+    console.log(time);
 
     //結果出力
-    var result = document.getElementById("result");
-    result.innerText = msg;
+    var result1 = document.getElementById("result1");
+    result1.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
+    //$('#result').show();
+
+    //二分探索で検索する
+    var startTime = new Date(); //開始時間の取得
+    var msg = binarySearch(data, target);
+    var endTime = new Date();　//終了時間の取得
+    var time = endTime.getTime() - startTime.getTime();
+    console.log(time);
+
+    //結果出力
+    var result2 = document.getElementById("result2");
+    result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
     $('#result').show();
   })
 })
 
 
 //（１）線形探索
-function linerResearch (data,target) {
+function linerSearch (data,target) {
   var num = -1;
   for (var i=0; i<data.length; i++) {
     if(data[i]==target) {
@@ -33,16 +44,45 @@ function linerResearch (data,target) {
       break;
     }
   }
-  //検索する数がリストになかった場合
-  var msg = '';
-  if (num>0) {
-    msg = target + 'はリストの' + num + '番目でした'
-  } else {
-    msg = target + 'はリストに存在しませんでした'
-  }
+
+  //メッセージ表示
+  var msg = '[線形探索]　' + message(num,target);
   return msg;
 }
 
+//(2)二分探索
+function binarySearch (data, target) {
+  var maxNum = data.length-1
+  var minNum = 0
+  var mid;
+  var msg = '[二分探索]　';
+  var num = -1;
+
+  while(minNum < maxNum) {
+    mid = Math.ceil((maxNum - minNum) / 2);
+    console.log(mid);
+    if(data[mid]==target) {
+      num = mid
+    } else if(data[mid]>target) {
+      minNum = mid
+    } else {
+      maxNum = mid
+    }
+  }
+  //メッセージ表示
+  var msg = '[二分探索]　' + message(num,target);
+  return msg;
+}
+
+//表示メッセージを作成する関数
+function message(num,target) {
+  if (num>0) {
+    msg = target + 'はリストの' + num + '番目でした。'
+  } else {
+    msg = target + 'はリストに存在しませんでした。'
+  }
+  return msg;
+}
 
 
 //CSVファイルを読み込む関数
