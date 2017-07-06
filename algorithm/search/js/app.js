@@ -19,35 +19,32 @@ $(function () {
         //検索値の取得
         var textarea = document.getElementById("target").value;
         var target = Number(textarea);
-        console.log(target);
 
         //線形探索で検索する
         var startTime = new Date(); //開始時間の取得
         var msg = linerSearch(data, target);
         var endTime = new Date();　//終了時間の取得
         var time = endTime.getTime() - startTime.getTime();
-        console.log(time);
 
         //結果出力
         var result1 = document.getElementById("result1");
         result1.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
         //$('#result').show();
 
-        /*//二分探索で検索する
+        //二分探索で検索する
         var startTime = new Date(); //開始時間の取得
         var msg = binarySearch(data, target);
         var endTime = new Date();　//終了時間の取得
         var time = endTime.getTime() - startTime.getTime();
-        console.log(time);
 
         //結果出力
         var result2 = document.getElementById("result2");
         result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
-        $('#result').show();*/
+        $('#result').show();
       }) //（検索ボタンを押したとき）
     } //reader.onload = function(ev) {
   })//selfile.addEventListener("change",function(evt)
-})//$(function () 
+})//$(function ()
 
 
 //（１）線形探索
@@ -69,19 +66,22 @@ function linerSearch (data,target) {
 function binarySearch (data, target) {
   var maxNum = data.length-1
   var minNum = 0
-  var mid;
+  var mid = -1;
   var msg = '[二分探索]　';
   var num = -1;
 
   while(minNum < maxNum) {
-    mid = Math.ceil((maxNum - minNum) / 2);
-    console.log(mid);
+    mid = Math.ceil((maxNum - minNum) / 2) + minNum;
+    console.log(minNum, maxNum,mid, data[mid],target);
     if(data[mid]==target) {
-      num = mid
+      num = mid + 1
+      break;
+    } else if(maxNum == mid) {
+      break;
     } else if(data[mid]>target) {
-      minNum = mid
-    } else {
       maxNum = mid
+    } else {
+      minNum = mid
     }
   }
   //メッセージ表示
@@ -100,7 +100,7 @@ function message(num,target) {
 }
 
 
-//CSVファイルを読み込む関数
+/*//CSVファイルを読み込む関数
 function getCSV(filename) {
   var request = new XMLHttpRequest();
   request.open("get", filename, false);
@@ -133,4 +133,4 @@ function getData() {
     console.log(data);
     return data;
   }
-}
+}*/
