@@ -42,6 +42,31 @@ $(function () {
         result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
         $('#result').show();
       }) //（検索ボタンを押したとき）
+
+      // 最大値ボタンを押したとき
+      $('#search').click(function() {
+        //線形探索で検索する
+        var startTime = new Date(); //開始時間の取得
+        var msg = linerMax(data);
+        var endTime = new Date();　//終了時間の取得
+        var time = endTime.getTime() - startTime.getTime();
+
+        //結果出力
+        var result1 = document.getElementById("result1");
+        result1.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
+
+        //javascriptの探索メソッドを利用
+        var startTime = new Date(); //開始時間の取得
+        var msg = jsMax(data);
+        var endTime = new Date();　//終了時間の取得
+        var time = endTime.getTime() - startTime.getTime();
+
+        //結果出力
+        var result2 = document.getElementById("result2");
+        result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
+        $('#result').show();
+
+      }//(最大値ボタンを押したとき)
     } //reader.onload = function(ev) {
   })//selfile.addEventListener("change",function(evt)
 })//$(function ()
@@ -99,7 +124,31 @@ function message(num,target) {
   return msg;
 }
 
+//線形探索（最大値）
+function linerMax(data) {
+  var max = 0;
 
+  for (var i=0; i<data.length; i++) {
+    if(max<data[i]) {
+      max = data[i];
+    }
+  }
+  return max;
+}
+
+//線形探索（最小値）
+function linerMax(data) {
+  var min = 0;
+
+  for (var i=0; i<data.length; i++) {
+    if(min>data[i]) {
+      min = data[i];
+    }
+  }
+  return min;
+}
+
+//JavaScriptのメソッドで探索する
 /*//CSVファイルを読み込む関数
 function getCSV(filename) {
   var request = new XMLHttpRequest();
