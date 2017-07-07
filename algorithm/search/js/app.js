@@ -14,7 +14,7 @@ $(function () {
         data.push(column[0]);
       }
 
-      //検索ボタンが押された時
+//検索ボタンが押された時
       $('#search').click(function() {
         //検索値の取得
         var textarea = document.getElementById("target").value;
@@ -43,8 +43,9 @@ $(function () {
         $('#result').show();
       }) //（検索ボタンを押したとき）
 
-      // 最大値ボタンを押したとき
-      $('#search').click(function() {
+// 最大値ボタンを押したとき
+      $('#max').click(function() {
+
         //線形探索で検索する
         var startTime = new Date(); //開始時間の取得
         var msg = linerMax(data);
@@ -66,7 +67,34 @@ $(function () {
         result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
         $('#result').show();
 
-      }//(最大値ボタンを押したとき)
+      })//(最大値ボタンを押したとき)
+
+// 最小値ボタンを押したとき
+            $('#min').click(function() {
+
+              //線形探索で検索する
+              var startTime = new Date(); //開始時間の取得
+              var msg = linerMin(data);
+              var endTime = new Date();　//終了時間の取得
+              var time = endTime.getTime() - startTime.getTime();
+
+              //結果出力
+              var result1 = document.getElementById("result1");
+              result1.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
+
+              //javascriptの探索メソッドを利用
+              var startTime = new Date(); //開始時間の取得
+              var msg = jsMin(data);
+              var endTime = new Date();　//終了時間の取得
+              var time = endTime.getTime() - startTime.getTime();
+
+              //結果出力
+              var result2 = document.getElementById("result2");
+              result2.innerText = msg + '所要時間：' + time + ' (ミリ秒)';
+              $('#result').show();
+
+            })//(最大値ボタンを押したとき)
+
     } //reader.onload = function(ev) {
   })//selfile.addEventListener("change",function(evt)
 })//$(function ()
@@ -127,28 +155,46 @@ function message(num,target) {
 //線形探索（最大値）
 function linerMax(data) {
   var max = 0;
+  var place = 0;
 
   for (var i=0; i<data.length; i++) {
     if(max<data[i]) {
       max = data[i];
+      place = i
     }
   }
-  return max;
+  var msg = '[線形探索]　最大値は' + max + '(' + place + '番目)です。'
+  return msg;
 }
 
 //線形探索（最小値）
-function linerMax(data) {
-  var min = 0;
+function linerMin(data) {
+  var min = 99999;
+  var place = 0;
 
   for (var i=0; i<data.length; i++) {
     if(min>data[i]) {
       min = data[i];
+      place = i;
     }
   }
-  return min;
+  var msg = '[線形探索]　最小値は' + min + '(' + place + '番目)です。'
+  return msg;
 }
 
-//JavaScriptのメソッドで探索する
+//JavaScriptのメソッド
+function jsMax(data) {
+  var max = Math.max.apply(null,data);
+  var msg = '[JS探索メソッド]　最大値は' + max + 'です。'
+  return msg;
+}
+function jsMin(data) {
+  var min = Math.min.apply(null,data);
+  var msg = '[JS探索メソッド]　最小値は' + min + 'です。'
+  return msg;
+}
+
+
 /*//CSVファイルを読み込む関数
 function getCSV(filename) {
   var request = new XMLHttpRequest();
