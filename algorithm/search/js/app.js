@@ -9,7 +9,7 @@ $(function () {
       var lines = reader.result.split("\n");
       var data =[];
 
-      for (var i=0; i<lines.length; i++) {
+      for (var i=0; i<lines.length-1; i++) {
         var column = lines[i].split(",");
         data.push(column[0]);
       }
@@ -160,7 +160,7 @@ function linerMax(data) {
   for (var i=0; i<data.length; i++) {
     if(max<data[i]) {
       max = data[i];
-      place = i
+      place = i+1
     }
   }
   var msg = '[線形探索]　最大値は' + max + '(' + place + '番目)です。'
@@ -175,7 +175,7 @@ function linerMin(data) {
   for (var i=0; i<data.length; i++) {
     if(min>data[i]) {
       min = data[i];
-      place = i;
+      place = i+1;
     }
   }
   var msg = '[線形探索]　最小値は' + min + '(' + place + '番目)です。'
