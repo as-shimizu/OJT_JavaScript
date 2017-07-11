@@ -11,7 +11,7 @@ $(function () {
 
       for (var i=0; i<lines.length-1; i++) {
         var column = lines[i].split(",");
-        data.push(column[0]);
+        data.push(Number(column[0]));
       }
 
 //検索ボタンが押された時
