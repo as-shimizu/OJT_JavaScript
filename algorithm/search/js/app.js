@@ -105,7 +105,7 @@ function linerSearch (data,target) {
   var num = -1;
   for (var i=0; i<data.length; i++) {
     if(data[i]==target) {
-      num = i+1
+      num = i+1;
       break;
     }
   }
@@ -117,8 +117,8 @@ function linerSearch (data,target) {
 
 //(2)二分探索
 function binarySearch (data, target) {
-  var maxNum = data.length-1
-  var minNum = 0
+  var maxNum = data.length-1;
+  var minNum = 0;
   var mid = -1;
   var msg = '[二分探索]　';
   var num = -1;
@@ -127,14 +127,14 @@ function binarySearch (data, target) {
     mid = Math.ceil((maxNum - minNum) / 2) + minNum;
     console.log(minNum, maxNum,mid, data[mid],target);
     if(data[mid]==target) {
-      num = mid + 1
+      num = mid + 1;
       break;
     } else if(maxNum == mid) {
       break;
     } else if(data[mid]>target) {
-      maxNum = mid
+      maxNum = mid;
     } else {
-      minNum = mid
+      minNum = mid;
     }
   }
   //メッセージ表示
@@ -145,9 +145,9 @@ function binarySearch (data, target) {
 //表示メッセージを作成する関数
 function message(num,target) {
   if (num>0) {
-    msg = target + 'はリストの' + num + '番目でした。'
+    msg = target + 'はリストの' + num + '番目でした。';
   } else {
-    msg = target + 'はリストに存在しませんでした。'
+    msg = target + 'はリストに存在しませんでした。';
   }
   return msg;
 }
@@ -160,7 +160,7 @@ function linerMax(data) {
   for (var i=0; i<data.length; i++) {
     if(max<data[i]) {
       max = data[i];
-      place = i+1
+      place = i+1;
     }
   }
   var msg = '[線形探索]　最大値は' + max + '(' + place + '番目)です。'
@@ -185,12 +185,12 @@ function linerMin(data) {
 //JavaScriptのメソッド
 function jsMax(data) {
   var max = Math.max.apply(null,data);
-  var msg = '[JS探索メソッド]　最大値は' + max + 'です。'
+  var msg = '[JS探索メソッド]　最大値は' + max + 'です。';
   return msg;
 }
 function jsMin(data) {
   var min = Math.min.apply(null,data);
-  var msg = '[JS探索メソッド]　最小値は' + min + 'です。'
+  var msg = '[JS探索メソッド]　最小値は' + min + 'です。';
   return msg;
 }
 
