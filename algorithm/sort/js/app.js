@@ -15,7 +15,7 @@ $(function () {
 
       for (var i=0; i<lines.length -1; i++) {
         var column = lines[i].split(",");
-        data.push(column[0]);
+        data.push(Number(column[0]));
       }
 
 //処理をおこなう
@@ -25,7 +25,11 @@ $(function () {
       var resultBulb = bulbSort(data);
       var endTime = new Date();　//終了時間の取得
       var time = endTime.getTime() - startTime.getTime();
+      //表示
+      resultBulb.unshift("バブルソート");
+      resultBulb.push('所要時間：' + time);
 
+      createTable(resultBulb,1);
 
     })
     }//reader.onload = function(ev) {
@@ -58,7 +62,22 @@ function bulbSort (data) {
 
 
 //クイックソート
+/*function quickSort(data) {
+  var compare = data[0];
+  var ary1;
+  var ary2;
 
+  for(var i=0; i<data.length; i++) {
+    if(data[i]<compare) {
+      ary1.push(data[i]);
+    } else {
+      ary2.push(data[i]);
+    }
+  }
+
+  for(i=0; )
+
+}*/
 
 
 //その他の関数
@@ -71,3 +90,17 @@ function change(data,i,j) {
 }
 
 //出力用の表の作成
+function createTable(result,ncol) {
+  var row = [];
+  var table = document.createElement("table");
+  for(var i=0; i<result.length; i++) {
+    row.push(table.insertRow(-1));
+    //for(var j=0; j<ncol; j++) {
+      cell=row[i].insertCell(-1);
+      console.log(cell);
+      cell.appendChild(document.createTextNode(result[i]));
+  //  }
+  }
+  document.getElementById("test").appendChild(table);
+  //console.log(table);
+}
