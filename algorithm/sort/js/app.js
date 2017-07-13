@@ -22,14 +22,14 @@ $(function () {
     $('#sort').click(function() {
       //バブルソート
       var startTime = new Date(); //開始時間の取得
-      var resultBulb = bulbSort(data);
+      var resultBulb = data.concat();
+      resultBulb = bulbSort(resultBulb);
       var endTime = new Date();　//終了時間の取得
       var time = endTime.getTime() - startTime.getTime();
       //表示
       resultBulb.unshift("バブルソート");
       resultBulb.push('所要時間：' + time);
-
-      createTable(resultBulb,1);
+      mergeSort(data);
 
     })
     }//reader.onload = function(ev) {
@@ -41,25 +41,115 @@ $(function () {
 
 //バブルソート
 function bulbSort (data) {
-  if(data.length > 1) {
-    for(var i=0; i < data.length-1; i++) {
-      if(i+1 >= data.length - 1) {
+  var datab = data;
+  if(datab.length > 1) {
+    for(var i=0; i < datab.length-1; i++) {
+      if(i+1 >= datab.length - 1) {
         break;
       }
-      for (var j=i+1; j < data.length; j++) {
-        if(data[i] > data[j]) {
-          data = change(data,i,j);
+      for (var j=i+1; j < datab.length; j++) {
+        if(datab[i] > datab[j]) {
+          datab = change(datab,i,j);
         }
       }
     }
   }
-  return data;
+  return datab;
 }
 
-//ヒープソート
+/*ヒープソート
+function heapSort(data) {
 
-//マージソート
+}*/
 
+//マージソートを行う関数
+function mergeSort(data) {
+  var i = 0;
+  var j=0;
+  var inputSize = 0;
+  var inputArray = data.concat();
+  var outputArray = [];
+  console.log(inputArray);
+
+  while(inputArray.length != 1) {
+    	j=0;
+    	inputSize = inputArray.length -1;
+    	while(j+1<inputSize) {
+      		outputArray.push(merge(inputArray[j],inputArray[j+1]));
+      		j += 2;
+    	}
+    	while(inputSize >= j) {
+      		outputArray.push(inputArray[j]);
+      		j++
+    	}
+//console.log(inputArray);
+//console.log(outputArray);
+
+    	inputArray = outputArray.concat();
+    	outputArray = [];
+
+  	}
+  console.log(inputArray);
+}
+
+//マージソートの中でマージする際の関数
+function merge(d1, d2) {
+  var newData = [];
+  var i1 = 0;
+  var i2 = 0;
+  var check = 0;
+
+  if(d1.length > 1) {
+  	var len1 = d1.length;
+  	var data1 = d1;
+  } else {
+  	var len1 = 1;
+  	var data1 = [];
+  	data1.push(d1);
+  	
+  }
+  if(d2.length > 1) {
+  	var len2 = d2.length;
+  	var data2 = d2;
+  } else {
+  	var len2 = 1;
+  	var data2 = [];
+  	data2.push(d2);
+  }
+
+  while(i1<len1 || i2<len2) {
+  	check++;
+    if(data1[i1]<data2[i2]) {
+      newData.push(data1[i1]);
+      i1++;
+    } else if (data1[i1]>data2[i2]) {
+      newData.push(data2[i2]);
+      i2++;
+    } else {
+    	break;
+    }
+  }
+   
+  while(i1!=len1 || i2!=len2) {
+    if(i1<len1) {
+    	newData.push(data1[i1]);
+    	i1++;
+    	console.log("case1");
+    	if(i1==len1) {
+    		break;
+    	}
+    } else if(i2<len2) {
+    	newData.push(data2[i2]);
+    	i2++;
+    	console.log("case2");
+    	if(i2==len2) {
+    		break;
+    	}
+    }
+  }
+  console.log(newData);
+  return newData;
+}
 
 //クイックソート
 /*function quickSort(data) {
@@ -97,7 +187,6 @@ function createTable(result,ncol) {
     row.push(table.insertRow(-1));
     //for(var j=0; j<ncol; j++) {
       cell=row[i].insertCell(-1);
-      console.log(cell);
       cell.appendChild(document.createTextNode(result[i]));
   //  }
   }
