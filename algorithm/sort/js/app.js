@@ -61,10 +61,11 @@ function bulbSort (data) {
   var datab = data;
   if(datab.length > 1) {
     for(var i=0; i < datab.length-1; i++) {
-      if(i+1 >= datab.length - 1) {
+      if(i+1 >= datab.length) {
         break;
       }
       for (var j=i+1; j < datab.length; j++) {
+      console.log(i,j);
         if(datab[i] > datab[j]) {
           datab = change(datab,i,j);
         }
