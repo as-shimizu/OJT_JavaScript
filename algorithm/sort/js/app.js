@@ -29,8 +29,25 @@ $(function () {
       //表示
       resultBulb.unshift("バブルソート");
       resultBulb.push('所要時間：' + time);
-      mergeSort(data);
 
+      //マージソート
+      var startTime = new Date(); //開始時間の取得
+      var resultMerge = data.concat();
+      resultMerge = mergeSort(resultMerge);
+      var endTime = new Date();　//終了時間の取得
+      time = endTime.getTime() - startTime.getTime();
+      //表示
+      resultMerge.unshift("マージソート");
+      resultMerge.push('所要時間：' + time);
+
+      //表示
+      var viewTable = [];
+      var col = [];
+      for(var i=0; i<data.length +2; i++) {
+        col = [resultBulb[i], resultMerge[i]];
+        viewTable.push(col);
+      }
+      createTable(viewTable,2);
     })
     }//reader.onload = function(ev) {
   });//selfile.addEventListener("change",function(evt)
@@ -69,12 +86,11 @@ function mergeSort(data) {
   var inputSize = 0;
   var inputArray = data.concat();
   var outputArray = [];
-  console.log(inputArray);
 
   while(inputArray.length != 1) {
     	j=0;
     	inputSize = inputArray.length -1;
-    	while(j+1<inputSize) {
+    	while(j+1<=inputSize) {
       		outputArray.push(merge(inputArray[j],inputArray[j+1]));
       		j += 2;
     	}
@@ -84,12 +100,16 @@ function mergeSort(data) {
     	}
 //console.log(inputArray);
 //console.log(outputArray);
-
     	inputArray = outputArray.concat();
     	outputArray = [];
 
   	}
-  console.log(inputArray);
+
+    var result = [];
+    for(var i=0; i<inputArray[0].length; i++) {
+      result.push(inputArray[0][i])
+    }
+    return result;
 }
 
 //マージソートの中でマージする際の関数
@@ -106,7 +126,7 @@ function merge(d1, d2) {
   	var len1 = 1;
   	var data1 = [];
   	data1.push(d1);
-  	
+
   }
   if(d2.length > 1) {
   	var len2 = d2.length;
@@ -129,30 +149,28 @@ function merge(d1, d2) {
     	break;
     }
   }
-   
+
   while(i1!=len1 || i2!=len2) {
     if(i1<len1) {
     	newData.push(data1[i1]);
     	i1++;
-    	console.log("case1");
     	if(i1==len1) {
     		break;
     	}
     } else if(i2<len2) {
     	newData.push(data2[i2]);
     	i2++;
-    	console.log("case2");
     	if(i2==len2) {
     		break;
     	}
     }
   }
-  console.log(newData);
   return newData;
 }
 
+/*
 //クイックソート
-/*function quickSort(data) {
+function quickSort(data) {
   var compare = data[0];
   var ary1;
   var ary2;
@@ -185,10 +203,10 @@ function createTable(result,ncol) {
   var table = document.createElement("table");
   for(var i=0; i<result.length; i++) {
     row.push(table.insertRow(-1));
-    //for(var j=0; j<ncol; j++) {
+    for(var j=0; j<ncol; j++) {
       cell=row[i].insertCell(-1);
-      cell.appendChild(document.createTextNode(result[i]));
-  //  }
+      cell.appendChild(document.createTextNode(result[i][j]));
+    }
   }
   document.getElementById("test").appendChild(table);
   //console.log(table);
