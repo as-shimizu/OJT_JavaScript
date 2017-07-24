@@ -30,6 +30,7 @@ $(function () {
       resultBulb.unshift("バブルソート");
       resultBulb.push('所要時間：' + time);
 
+
       //マージソート
       var startTime = new Date(); //開始時間の取得
       var resultMerge = data.concat();
@@ -40,14 +41,25 @@ $(function () {
       resultMerge.unshift("マージソート");
       resultMerge.push('所要時間：' + time);
 
+      //クイックソート
+      var startTime = new Date(); //開始時間の取得
+      var resultQUick = data.concat();
+      resultQUick = quickSort(resultQUick);
+      var endTime = new Date();　//終了時間の取得
+      time = endTime.getTime() - startTime.getTime();
+      //表示
+      resultMerge.unshift("クイックソート");
+      resultMerge.push('所要時間：' + time);
+    
+
       //表示
       var viewTable = [];
       var col = [];
       for(var i=0; i<data.length +2; i++) {
-        col = [resultBulb[i], resultMerge[i]];
+        col = [resultBulb[i], resultMerge[i], resultQUick[i]];
         viewTable.push(col);
       }
-      createTable(viewTable,2);
+      createTable(viewTable,3);
     })
     }//reader.onload = function(ev) {
   });//selfile.addEventListener("change",function(evt)
@@ -65,7 +77,6 @@ function bulbSort (data) {
         break;
       }
       for (var j=i+1; j < datab.length; j++) {
-      console.log(i,j);
         if(datab[i] > datab[j]) {
           datab = change(datab,i,j);
         }
@@ -99,8 +110,6 @@ function mergeSort(data) {
       		outputArray.push(inputArray[j]);
       		j++
     	}
-//console.log(inputArray);
-//console.log(outputArray);
     	inputArray = outputArray.concat();
     	outputArray = [];
 
@@ -169,24 +178,60 @@ function merge(d1, d2) {
   return newData;
 }
 
-/*
+
 //クイックソート
 function quickSort(data) {
-  var compare = data[0];
-  var ary1;
-  var ary2;
+  var ary0 = data.concat();
+  var listAry2 = [];
+  var result = [];
 
-  for(var i=0; i<data.length; i++) {
-    if(data[i]<compare) {
-      ary1.push(data[i]);
-    } else {
-      ary2.push(data[i]);
+  while(ary0.length>1) {
+    if(checkTheArray(ary0)<0) {
+      for(var i; i<ary0.length; i++) {
+        result.push(ary0[i]);
+      }
+      var a = listAry2.length-1
+      ary0 = listAry2[a];
+      listAry2.pop();
     }
+    var result = devide(ary0);
+    listAry2 = result[1].concat();
+    ary0 = result[0].concat();
   }
 
-  for(i=0; )
+}
 
-}*/
+//値xを基準にパーディションを分ける関数
+function devide(ary0) {
+  var compare = ary0[0];
+  var part1 = [];
+  var part2 = [];
+
+  for(var i=0; i<ary0.length; i++) {
+    if(ary0[i]<compare) {
+      part1.push(ary0[i]);
+    } else {
+      part2.push(ary0[i]);
+    }
+  }
+  var result = [part1,part2];
+  return result;
+}
+
+//aryの値が全て同じ場合-1をかえす関数
+function checkTheArray(data) {
+  var count = 1;
+  var result = 1;
+  for (var i=0; i<data.length; i++) {
+    if(data[0]==data[i]) {
+      count++
+    }
+  }
+  if(count==data.length) {
+    result = -1;
+  }
+  return result;
+}
 
 
 //その他の関数
