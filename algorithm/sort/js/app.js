@@ -61,14 +61,28 @@ $(function () {
       resultQUick.unshift("クイックソート");
       resultQUick.push('所要時間：' + time);
 
+      //JavaScriptのメソッド
+      var startTime = new Date(); //開始時間の取得
+      var resultJS = data.concat();
+      resultJS.sort(function(a,b){
+        if(a<b) return -1;
+        if(a>b) return 1;
+        return 0;
+      });
+      var endTime = new Date();　//終了時間の取得
+      time = endTime.getTime() - startTime.getTime();
+      //表示
+      resultJS.unshift("JSのメソッド");
+      resultJS.push('所要時間：' + time);
+
       //表示
       var viewTable = [];
       var col = [];
       for(var i=0; i<data.length +2; i++) {
-        col = [resultBulb[i], resultHeap[i], resultMerge[i], resultQUick[i]];
+        col = [resultBulb[i], resultHeap[i], resultMerge[i], resultQUick[i], resultJS[i]];
         viewTable.push(col);
       }
-      createTable(viewTable,4);
+      createTable(viewTable,5);
     })
     }//reader.onload = function(ev) {
   });//selfile.addEventListener("change",function(evt)
