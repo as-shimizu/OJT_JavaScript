@@ -30,6 +30,16 @@ $(function () {
       resultBulb.unshift("バブルソート");
       resultBulb.push('所要時間：' + time);
 
+      //ヒープソート
+      var startTime = new Date(); //開始時間の取得
+      var resultHeap = data.concat();
+      resultHeap = heapSort(resultHeap);
+      var endTime = new Date();　//終了時間の取得
+      time = endTime.getTime() - startTime.getTime();
+      //表示
+      resultHeap.unshift("ヒープソート");
+      resultHeap.push('所要時間：' + time);
+
 
       //マージソート
       var startTime = new Date(); //開始時間の取得
@@ -55,10 +65,10 @@ $(function () {
       var viewTable = [];
       var col = [];
       for(var i=0; i<data.length +2; i++) {
-        col = [resultBulb[i], resultMerge[i], resultQUick[i]];
+        col = [resultBulb[i], resultHeap[i], resultMerge[i], resultQUick[i]];
         viewTable.push(col);
       }
-      createTable(viewTable,3);
+      createTable(viewTable,4);
     })
     }//reader.onload = function(ev) {
   });//selfile.addEventListener("change",function(evt)
@@ -85,10 +95,39 @@ function bulbSort (data) {
   return datab;
 }
 
-/*ヒープソート
+//ヒープソート
 function heapSort(data) {
+  var aryH = data.concat();
+  var Heap = [];
+  var outputAry = [];
 
-}*/
+  while(aryH.length>0) {
+    console.log("function1", aryH,Heap);
+    outputAry = SortHeap(aryH);
+    Heap.push(outputAry[0]);
+    outputAry[0] = outputAry[outputAry.length-1];
+    outputAry.pop();
+    aryH = outputAry.concat();
+    outputAry =[];
+  }
+  return Heap;
+}
+
+//根に一番小さい値をもってくる関数
+function SortHeap(data) {
+  var hplength = Math.floor(data.length/2);
+  for(var i=hplength; i> 0; i=i-1) {
+    console.log(i);
+    if(data[i-1]>data[2*i] && 2*i<data.length) {
+      change(data,i-1,2*i);
+    }
+    if(data[i-1]>data[(2*i)-1] && (2*i)-1<data.length) {
+      change(data,i-1,(2*i)-1);
+    }
+  }
+  console.log(data)
+  return data;
+}
 
 //マージソートを行う関数
 function mergeSort(data) {
