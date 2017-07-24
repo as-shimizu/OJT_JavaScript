@@ -48,9 +48,8 @@ $(function () {
       var endTime = new Date();　//終了時間の取得
       time = endTime.getTime() - startTime.getTime();
       //表示
-      resultMerge.unshift("クイックソート");
-      resultMerge.push('所要時間：' + time);
-    
+      resultQUick.unshift("クイックソート");
+      resultQUick.push('所要時間：' + time);
 
       //表示
       var viewTable = [];
@@ -183,27 +182,42 @@ function merge(d1, d2) {
 function quickSort(data) {
   var ary0 = data.concat();
   var listAry2 = [];
-  var result = [];
+  var resultAry = [];
+  var a = 0;
 
-  while(ary0.length>1) {
+  while(resultAry.length < data.length) {
     if(checkTheArray(ary0)<0) {
-      for(var i; i<ary0.length; i++) {
-        result.push(ary0[i]);
+      if(ary0.length==1) {
+        resultAry.push(ary0[0]);
+      }else {
+        for(var i; i<ary0.length; i++) {
+          resultAry.push(ary0[i]);
+        }
       }
-      var a = listAry2.length-1
-      ary0 = listAry2[a];
+      if(listAry2.length==0) {
+        break;
+      }
+      a = listAry2.length-1
+      ary0 = listAry2[a].concat();
       listAry2.pop();
+    } else {
+      var devideAry = devide(ary0);
+      if(devideAry[1].length>0) {
+    	   listAry2.push(devideAry[1]);
+       }
+       ary0 = devideAry[0].concat();
     }
-    var result = devide(ary0);
-    listAry2 = result[1].concat();
-    ary0 = result[0].concat();
   }
-
+    return resultAry;
 }
 
 //値xを基準にパーディションを分ける関数
 function devide(ary0) {
-  var compare = ary0[0];
+  if(ary0[0]<ary0[1]) {
+    var compare = ary0[1];
+  } else {
+    var compare = ary0[0];
+  }
   var part1 = [];
   var part2 = [];
 
@@ -220,15 +234,19 @@ function devide(ary0) {
 
 //aryの値が全て同じ場合-1をかえす関数
 function checkTheArray(data) {
-  var count = 1;
+  var count = 0;
   var result = 1;
-  for (var i=0; i<data.length; i++) {
-    if(data[0]==data[i]) {
-      count++
-    }
-  }
-  if(count==data.length) {
+  if(data.length==1) {
     result = -1;
+  } else {
+    for (var i=0; i<data.length; i++) {
+      if(data[0]==data[i]) {
+        count++
+      }
+    }
+    if(count==data.length) {
+      result = -1;
+    }
   }
   return result;
 }
