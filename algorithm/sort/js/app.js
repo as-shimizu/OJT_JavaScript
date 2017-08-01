@@ -1,9 +1,7 @@
 //ソート
 //バブルソート、ヒープソート、マージソート、クイックソート
-
 //入力されたデータ
 var data = [];
-
 //データを選択されたファイルから読み込む
 $(function () {
     var selfile = document.getElementById("selfile");
@@ -20,11 +18,9 @@ $(function () {
         } //reader.onload = function(ev) {
     }); //selfile.addEventListener("change",function(evt)
 }); //$(function ()
-
 //ボタンを押すと実行される処理
 //バブルソート
 $('#buble').click(function () {
-    
     var startTime = new Date(); //開始時間の取得
     var resultBuble = data.concat();
     resultBulb = bubleSort(resultBuble);
@@ -36,8 +32,7 @@ $('#buble').click(function () {
     createTable(resultBuble);
 })
 //ヒープソート
-$('#heap').click(function () {   
-    
+$('#heap').click(function () {
     var startTime = new Date(); //開始時間の取得
     var resultHeap = data.concat();
     resultHeap = heapSort(resultHeap);
@@ -50,7 +45,6 @@ $('#heap').click(function () {
 })
 //マージソート    
 $('#merge').click(function () {
-    
     var startTime = new Date(); //開始時間の取得
     var resultMerge = data.concat();
     resultMerge = mergeSort(resultMerge);
@@ -63,7 +57,6 @@ $('#merge').click(function () {
 })
 //クイックソート
 $('#quick').click(function () {
-    
     var startTime = new Date(); //開始時間の取得
     var resultQUick = data.concat();
     resultQUick = quickSort(resultQUick);
@@ -76,7 +69,6 @@ $('#quick').click(function () {
 })
 //JavaScriptのメソッド    
 $('#js_method').click(function () {
-    
     var startTime = new Date(); //開始時間の取得
     var resultJS = data.concat();
     resultJS.sort(function (a, b) {
@@ -91,8 +83,6 @@ $('#js_method').click(function () {
     resultJS.push('所要時間：' + time + 'ミリ秒');
     createTable(resultJS);
 })
-
-
 //関数の定義
 //バブルソート
 function bubleSort(data) {
@@ -296,12 +286,9 @@ function change(data, i, j) {
 //出力用の表の作成
 function createTable(result) {
     var row = [];
-    
     document.getElementById("test").removeChild(viewTable);
-    
     var table = document.createElement("table");
     table.setAttribute('id', 'viewTable');
-    
     for (var i = 0; i < result.length; i++) {
         row.push(table.insertRow(-1));
         cell = row[i].insertCell(-1);
