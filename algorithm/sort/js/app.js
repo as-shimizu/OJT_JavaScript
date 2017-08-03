@@ -2,22 +2,23 @@
 //バブルソート、ヒープソート、マージソート、クイックソート
 //入力されたデータ
 var data = [];
+
 //データを選択されたファイルから読み込む
-$(function () {
-    var selfile = document.getElementById("selfile");
-    selfile.addEventListener("change", function (evt) {
-        var file = evt.target.files;
-        var reader = new FileReader();
-        reader.readAsText(file[0]);
-        reader.onload = function (ev) {
-            var lines = reader.result.split("\n");
-            for (var i = 0; i < lines.length - 1; i++) {
-                var column = lines[i].split(",");
-                data.push(Number(column[0]));
-            }
-        } //reader.onload = function(ev) {
-    }); //selfile.addEventListener("change",function(evt)
-}); //$(function ()
+$('#selfile').change(function(evt) {
+  data = []; //data配列の初期化
+  var file = evt.target.files; 
+  var reader = new FileReader();
+  reader.readAsText(file[0]);
+  reader.onload = function (ev) {
+    var lines = reader.result.split("\n");
+    for (var i = 0; i < lines.length - 1; i++) {
+      var column = lines[i].split(",");
+      data.push(Number(column[0]));
+    }
+  }
+});
+
+
 //ボタンを押すと実行される処理
 //バブルソート
 $('#buble').click(function () {
@@ -287,6 +288,7 @@ function change(data, i, j) {
 function createTable(result) {
     var row = [];
     document.getElementById("test").removeChild(viewTable);
+    
     var table = document.createElement("table");
     table.setAttribute('id', 'viewTable');
     for (var i = 0; i < result.length; i++) {
