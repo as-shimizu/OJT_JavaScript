@@ -1,0 +1,19 @@
+#field {
+  background-color: #6BBF3F;
+}
+
+#workspace {
+  background-color: #FFB74C;
+}
+
+td {
+  border: 1px #000000 solid;
+  width: 200px;
+  height: 170px;
+  text-align: center;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}

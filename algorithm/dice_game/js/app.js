@@ -19,7 +19,7 @@ $('#dice').click(function() {
     //掛け金を設定
     var latch = $('#latch');
     console.log(latch);
-    
+
     if(latch == "" ) {
         alert("掛け金を入力してください");
     } else if(latch <= 0 ) {
@@ -29,33 +29,67 @@ $('#dice').click(function() {
     } else {
     	//掛け金が正しく入力された時の処理
         var dice = throwDice();
-        
+
         //サイコロの画像を表示
         console.log(dice);
         //役とレートの取得
         var result = getNameRate(dice);
-        
+
         var changeMoney = latch * result.rate;
         money += changeMoney;
-        
+
         //HTMLに出力
         console.log(result.name, result.rate, changeMoney,money);
     }
 });
 
-
+//サイコロを振る
 function throwDice() {
     var dice = [];
     for(var i=0; i<numDice; i++) {
         dice.push(Math.floor(Math.random()*6) + 1);
     }
+    //サイコロイメージを表示
+    for(var i=0; i<numDice; i++) {
+      var imageDice = document.createElement('img');
+      imageDice.setAttribute('alt','""');
+      imageDice.setAttribute('src',getImage(dice[0]));
+
+    }
     return dice;
 }
+
+//サイコロのイメージファイル名を取得する
+function getImage(i) {
+  var imageName = "";
+  switch (i) {
+    case 1 :
+      imageName = "image/1.png";
+      break;
+    case 2 :
+      imageName = "image/2.png";
+      break;
+    case 3 :
+      imageName = "image/3.png";
+      break;
+    case 4 :
+      imageName = "image/4.png";
+      break;
+    case 5 :
+      imageName = "image/5.png";
+      break;
+    case 6 :
+      imageName = "image/6.png";
+      break;
+  }
+  return imageName ;
+}
+
 
 function getNameRate(dice) {
     //サイコロの目を昇順に並べ替える
     dice = bubleSort(dice);
-    
+
     //出た目によってnameとrateを決める
 
     if(dice[0]==dice[1] && dice[0]==dice[2]) {
@@ -78,7 +112,7 @@ function getNameRate(dice) {
     } else if(dice[0]==1 && dice[1]==2 && dice[2]==3) {
         var result = new yaku("ヒフミ",-2);
         return result;
-    } 
+    }
     var result = new yaku("目なし",-1);
     return result;
 }
