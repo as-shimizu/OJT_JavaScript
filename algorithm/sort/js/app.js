@@ -86,20 +86,17 @@ $('#js_method').click(function () {
 })
 //関数の定義
 //バブルソート
-function bubleSort(data) {
-    var datab = data;
-    if (datab.length > 1) {
-        for (var i = 0; i < datab.length - 1; i++) {
-            if (i + 1 >= datab.length) {
-                break;
-            }
-            for (var j = i + 1; j < datab.length; j++) {
-                if (datab[i] > datab[j]) {
-                    datab = change(datab, i, j);
-                }
+function bubleSort(datab) {
+    if (datab.length > 1) { 　//datab配列に2つ以上の数値が格納されている時
+        for (var j = 0; j <= datab.length; j++) {
+        	for (var i = 0; i <= datab.length - 1; i++) {
+        		if (datab[i] > datab[i+1]) {
+        			datab = change(datab, i, i+1); //i番目とi+1番目を比較し、i+1番目の方が大きければ入れ替える
+            	}
             }
         }
     }
+    console.log(datab);
     return datab;
 }
 //ヒープソート
