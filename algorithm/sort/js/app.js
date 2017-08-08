@@ -101,22 +101,24 @@ function bubleSort(datab) {
 //ヒープソート
 function heapSort(data) {
     var aryH = data.concat();
-    var Heap = [];
-    var outputAry = [];
+    var Heap = [];　//ヒープ構造の根(一番小さい値)を順に格納
+    var outputAry = []; //1回のsortHeap結果のヒープ構造を一時的に格納
+    
     while (aryH.length > 0) {
-        outputAry = SortHeap(aryH);
-        Heap.push(outputAry[0]);
-        outputAry[0] = outputAry[outputAry.length - 1];
-        outputAry.pop();
-        aryH = outputAry.concat();
-        outputAry = [];
+        outputAry = sortHeap(aryH);　//ヒープ構造を作り、outputAryに格納
+        Heap.push(outputAry[0]);　//ヒープ構造の根(一番小さい値)をHeapに格納
+        outputAry[0] = outputAry[outputAry.length - 1];　//Heapに格納した数値の場所に、ヒープ構造の末端の値を入れる
+        outputAry.pop();　//output[0]に入れた数値を削除
+        aryH = outputAry.concat();　//aryHを更新
+        outputAry = [];　//outputaryをリセット
     }
     return Heap;
 }
 //根に一番小さい値をもってくる関数
-function SortHeap(data) {
-    var hplength = Math.floor(data.length / 2);
+function sortHeap(data) {
+    var hplength = Math.floor(data.length / 2);　//ヒープ構造の長さはデータの半分(小数点以下切り捨て)
     for (var i = hplength; i > 0; i = i - 1) {
+    	//親と子を比較し、一番小さい値を親に持ってくる
         if (data[i - 1] > data[2 * i] && 2 * i < data.length) {
             change(data, i - 1, 2 * i);
         }
