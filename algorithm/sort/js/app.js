@@ -96,7 +96,6 @@ function bubleSort(datab) {
             }
         }
     }
-    console.log(datab);
     return datab;
 }
 //ヒープソート
