@@ -119,6 +119,7 @@ function sortHeap(data) {
     var hplength = Math.floor(data.length / 2);　//ヒープ構造の長さはデータの半分(小数点以下切り捨て)
     for (var i = hplength; i > 0; i = i - 1) {
     	//親と子を比較し、一番小さい値を親に持ってくる
+    	//親がi番目のデータ(data[i-1])の時、子は2*i番目(data[2*i -1])と(2*i)+1番目(data[2*i])
         if (data[i - 1] > data[2 * i] && 2 * i < data.length) {
             change(data, i - 1, 2 * i);
         }
@@ -133,22 +134,25 @@ function mergeSort(data) {
     var i = 0;
     var j = 0;
     var inputSize = 0;
-    var inputArray = data.concat();
+    var inputArray = data.concat();//はじめはdataに含まれる数値は1つ1つ長さ1の配列と考える
     var outputArray = [];
+    
     while (inputArray.length != 1) {
         j = 0;
         inputSize = inputArray.length - 1;
+        //隣り合う2つの配列をマージして1つの配列にする
         while (j + 1 <= inputSize) {
             outputArray.push(merge(inputArray[j], inputArray[j + 1]));
             j += 2;
         }
+        //配列数が奇数の場合、最後の1つはマージせずそのままoutputArrayにいれる
         while (inputSize >= j) {
             outputArray.push(inputArray[j]);
             j++
         }
-        inputArray = outputArray.concat();
+        inputArray = outputArray.concat();　// 次のループでは出来上がったoutputArrayをinputArrayとして同じ作業をする
         outputArray = [];
-    }
+    }//inputArrayの配列数が1になったら終わる
     var result = [];
     for (var i = 0; i < inputArray[0].length; i++) {
         result.push(inputArray[0][i])
@@ -156,6 +160,7 @@ function mergeSort(data) {
     return result;
 }
 //マージソートの中でマージする際の関数
+//昇順に並んだ2つのデータセットを1つにあわせる
 function merge(d1, d2) {
     var newData = [];
     var i1 = 0;
