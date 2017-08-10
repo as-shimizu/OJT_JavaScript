@@ -163,7 +163,7 @@ function mergeSort(data) {
 //昇順に並んだ2つのデータセットを1つにあわせる
 function merge(d1, d2) {
     var newData = [];
-    var i1 = 0;
+    var i1 = 0; 
     var i2 = 0;
     var check = 0;
     if (d1.length > 1) {
@@ -171,7 +171,7 @@ function merge(d1, d2) {
         var data1 = d1;
     } else {
         var len1 = 1;
-        var data1 = [];
+        var data1 = [];　//配列の長さが１の場合も、長さ1の配列としてdata1を定義
         data1.push(d1);
     }
     if (d2.length > 1) {
@@ -184,6 +184,7 @@ function merge(d1, d2) {
     }
     while (i1 < len1 || i2 < len2) {
         check++;
+        //data[i1]とdata[i2]を比較し、小さいほうをnewDataに格納
         if (data1[i1] < data2[i2]) {
             newData.push(data1[i1]);
             i1++;
@@ -194,6 +195,7 @@ function merge(d1, d2) {
             break;
         }
     }
+    //一方の配列の数値が全てnewDataに格納された場合、もう一方の配列はそのままnewDataに追加する
     while (i1 != len1 || i2 != len2) {
         if (i1 < len1) {
             newData.push(data1[i1]);
@@ -218,6 +220,7 @@ function quickSort(data) {
     var resultAry = [];
     var a = 0;
     while (resultAry.length < data.length) {
+        //ary0を確認する
         if (checkTheArray(ary0) < 0) {
             if (ary0.length == 1) {
                 resultAry.push(ary0[0]);
@@ -243,20 +246,23 @@ function quickSort(data) {
     return resultAry;
 }
 //値xを基準にパーディションを分ける関数
+//xはary0のはじめの2つの数字のうち、大きいほう
+
 function devide(ary0) {
     if (ary0[0] < ary0[1]) {
         var compare = ary0[1];
     } else {
-        var compare = ary0[0];
+        var compare = ary0[0];　
     }
+    
     var part1 = [];
     var part2 = [];
     for (var i = 0; i < ary0.length; i++) {
         if (ary0[i] < compare) {
-            part1.push(ary0[i]);
+            part1.push(ary0[i]);　//part1はxより小さい値
         } else {
-            part2.push(ary0[i]);
-        }
+            part2.push(ary0[i]);　//part2はx以上の値
+    	}
     }
     var result = [part1, part2];
     return result;
@@ -264,17 +270,17 @@ function devide(ary0) {
 //aryの値が全て同じ場合-1をかえす関数
 function checkTheArray(data) {
     var count = 0;
-    var result = 1;
-    if (data.length == 1) {
+    var result = 1; //aryの値が全て同じではない場合は1をかえす
+    if (data.length == 1) { //aryの長さが1のときも-1をかえす
         result = -1;
     } else {
         for (var i = 0; i < data.length; i++) {
             if (data[0] == data[i]) {
-                count++
+                count++; //data[0]と等しい値を持つデータ数を数える
             }
         }
         if (count == data.length) {
-            result = -1;
+            result = -1;　//countとdataのデータ数が一致すれば、配列全ての値が等しい
         }
     }
     return result;
@@ -290,14 +296,19 @@ function change(data, i, j) {
 //出力用の表の作成
 function createTable(result) {
     var row = [];
+    //"test"にふくまれる、id=viewTableのtable Elementを一度消す
     document.getElementById("test").removeChild(viewTable);
     
+    //新たにid=viewTableを作成する
     var table = document.createElement("table");
     table.setAttribute('id', 'viewTable');
+    
+    //作成したviewTableにデータをいれる
     for (var i = 0; i < result.length; i++) {
         row.push(table.insertRow(-1));
         cell = row[i].insertCell(-1);
         cell.appendChild(document.createTextNode(result[i]));
     }
+    //作成した表を画面に表示させる
     document.getElementById("test").appendChild(table);
 }
