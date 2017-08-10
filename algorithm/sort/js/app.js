@@ -121,10 +121,10 @@ function sortHeap(data) {
     	//親と子を比較し、一番小さい値を親に持ってくる
     	//親がi番目のデータ(data[i-1])の時、子は2*i番目(data[2*i -1])と(2*i)+1番目(data[2*i])
         if (data[i - 1] > data[2 * i] && 2 * i < data.length) {
-            change(data, i - 1, 2 * i);
+            data = change(data, i - 1, 2 * i);
         }
         if (data[i - 1] > data[(2 * i) - 1] && (2 * i) - 1 < data.length) {
-            change(data, i - 1, (2 * i) - 1);
+            data = change(data, i - 1, (2 * i) - 1);
         }
     }
     return data;
@@ -166,9 +166,9 @@ function merge(d1, d2) {
     var i1 = 0; 
     var i2 = 0;
     var check = 0;
-    if (d1.length > 1) {
+    if (d1.length > 1) { //d1,d2を確認してdata1,data2に格納する
         var len1 = d1.length;
-        var data1 = d1;
+        var data1 = d1.concat();
     } else {
         var len1 = 1;
         var data1 = [];　//配列の長さが１の場合も、長さ1の配列としてdata1を定義
@@ -176,7 +176,7 @@ function merge(d1, d2) {
     }
     if (d2.length > 1) {
         var len2 = d2.length;
-        var data2 = d2;
+        var data2 = d2.concat();
     } else {
         var len2 = 1;
         var data2 = [];
@@ -185,14 +185,20 @@ function merge(d1, d2) {
     while (i1 < len1 || i2 < len2) {
         check++;
         //data[i1]とdata[i2]を比較し、小さいほうをnewDataに格納
+        //data[i1]==data[i2}]の場合は両方newDataに格納されるよう、if文を2つに分けた
         if (data1[i1] < data2[i2]) {
             newData.push(data1[i1]);
             i1++;
         } else if (data1[i1] > data2[i2]) {
             newData.push(data2[i2]);
             i2++;
+        } else if (data1[i1] == data2[i2]) {
+            newData.push(data1[i1]);
+            i1++;
+            newData.push(data2[i2]);
+            i2++;
         } else {
-            break;
+        	break;
         }
     }
     //一方の配列の数値が全てnewDataに格納された場合、もう一方の配列はそのままnewDataに追加する
@@ -215,32 +221,32 @@ function merge(d1, d2) {
 }
 //クイックソート
 function quickSort(data) {
-    var ary0 = data.concat();
-    var listAry2 = [];
-    var resultAry = [];
-    var a = 0;
+    var ary0 = data.concat();　//ソートするデータを格納(listAry2から順に受け渡される)
+    var listAry2 = [];　//ソートする配列を格納する(ary0になる配列を格納/順番待ちの配列)
+    var resultAry = []; //ソート結果を格納
+    var a = 0;　//listAry2[a]がlistAry2の最後の配列
     while (resultAry.length < data.length) {
         //ary0を確認する
-        if (checkTheArray(ary0) < 0) {
+        if (checkTheArray(ary0) < 0) { //配列内の数値が全て等しい場合の処理
             if (ary0.length == 1) {
-                resultAry.push(ary0[0]);
+                resultAry.push(ary0[0]);　//長さ1の場合はそのままresultAryに追加
             } else {
-                for (var i; i < ary0.length; i++) {
-                    resultAry.push(ary0[i]);
+                for (var i=0 ; i < ary0.length; i++) {
+                    resultAry.push(ary0[i]);　//全てresultAryに追加
                 }
             }
             if (listAry2.length == 0) {
                 break;
             }
-            a = listAry2.length - 1
+            a = listAry2.length - 1　//listAry2の最後の配列をary0に格納し、listAry2から削除
             ary0 = listAry2[a].concat();
             listAry2.pop();
-        } else {
-            var devideAry = devide(ary0);
+        } else {　//配列内に異なる数値が含まれる場合の処理
+            var devideAry = devide(ary0).concat();
             if (devideAry[1].length > 0) {
-                listAry2.push(devideAry[1]);
+                listAry2.push(devideAry[1]); //分割した配列のうち、値の大きいほうはlistAry2に格納
             }
-            ary0 = devideAry[0].concat();
+            ary0 = devideAry[0].concat();　//値の小さいほうの配列はary0に格納し、次のループでソートする
         }
     }
     return resultAry;
