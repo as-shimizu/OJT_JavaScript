@@ -1,5 +1,9 @@
-#field {
+#diceField {
   background-color: #6BBF3F;
+}
+
+#me {
+  background-color: #FFB74C;
 }
 
 #workspace {
@@ -8,12 +12,12 @@
 
 td {
   border: 1px #000000 solid;
-  width: 200px;
-  height: 170px;
+  width: 150px;
+  height: 80px;
   text-align: center;
 }
 
 img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
