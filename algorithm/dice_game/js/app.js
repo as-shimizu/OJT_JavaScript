@@ -7,44 +7,54 @@ var yaku = function(name, rate) {
 
 //変数の定義
 var money = 100000; //所持金
-var numDice = 3;
-var resultYaku = new yaku("",0);
+var numDice = 3; //サイコロの数
+var resultYaku = new yaku("",0);　//役の名前とrate
 var diceImg = [
   document.getElementById('diceImg1'),
   document.getElementById('diceImg2'),
   document.getElementById('diceImg3')
 ];
 
-
-//所持金を設定
-$('#cash').click(function() {
-    money += $('#money');
+//ゲームを始める
+$('#startGame').click(function() {
+    //所持金の設定
+    money = document.getElementById('cash').value;
+    document.getElementById('moneyNow').innerHTML = money;
+    //fieldとworkspaceを表示
+    $('#field').fadeIn(1000);
+    $('#workspace').fadeIn(1000);
+    //startを隠す
+    $('#start').fadeOut(1);
 });
 
-//サイコロを振る　がクリックされたら
+
+//One-Tern サイコロを振る
 $('#dice').click(function() {
     //掛け金を設定
     var latch = document.getElementById('latch').value;
 
     if(latch == "" ) {
         alert("掛け金を入力してください");
-    } else if(latch <= 0 ) {
+    } else if(!(latch > 0)) {
     	alert("0以上の数字を入力してください");
     } else if(latch > money) {
         alert("所持金が足りません");
     } else {
     	//掛け金が正しく入力された時の処理
-
         //サイコロ画像の削除
-        $('#diceImg1').fadeOut(1000)
-        $('#diceImg2').fadeOut(1500);
-        $('#diceImg3').fadeOut(2000);
+        $('#diceImg1').fadeOut(1);
+        $('#diceImg2').fadeOut(1);
+        $('#diceImg3').fadeOut(1);
+        $('#yakuName').fadeOut(1);
+
         //サイコロを投げる
         var dice = throwDice();
+
         //役とレートの取得
         getNameRate(dice);
         var yakuName = document.getElementById('yakuName');
-        $('#yakuName').innerText = 'resultYaku.name';
+        yakuName.innerHTML = resultYaku.name;
+        console.log(resultYaku.name);
 
         //お金計算
         var changeMoney = latch * resultYaku.rate;
@@ -66,10 +76,10 @@ function throwDice() {
       var image = diceImg[i]
       image.src="./image/" + dice[i] + ".png";
     }
-    $('#diceImg1').fadeIn(1000)
+    $('#diceImg1').fadeIn(1000);
     $('#diceImg2').fadeIn(1500);
     $('#diceImg3').fadeIn(2000);
-
+    $('#yakuName').fadeIn(2500);
     return dice;
 }
 
@@ -100,7 +110,7 @@ function getNameRate(dice) {
         resultYaku = new yaku("ヒフミ",-2);
         //return result;
     } else {
-      resultYaku = new yaku("目なし",-1);
+      resultYaku = new yaku("クズ",-1);
     }
 }
 

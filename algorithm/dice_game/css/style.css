@@ -6,8 +6,18 @@ body {
   background-color: #B8F28C;
 }
 
+#field {
+  display: none;
+}
 #workspace {
   background-color: #FFB74C;
+  display: none;
+}
+
+#start {
+  background-color: #FFB74C;
+  margin: 20px;
+  text-align: center;
 }
 
 table {
@@ -34,16 +44,9 @@ td {
   display: none;
 }
 
-/*親をオレンジ色で示す*/
-#player1 {
-  background-color: #FFB74C;
-}
-#player2 {
-  background-color: #FFB74C;
-}
-#player3 {
-  background-color: #FFB74C;
-}
-#player4 {
-  background-color: #FFB74C;
+#yakuName {
+  display: none;
+  color: #777777;
+  font-size: 28px;
+  font-weight: bold;
 }
