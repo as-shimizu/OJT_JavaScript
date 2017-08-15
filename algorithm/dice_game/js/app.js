@@ -1,13 +1,19 @@
-﻿var money = 100000; //所持金
-
 // 役のクラスを定義
 var yaku = function(name, rate) {
     // メンバ変数 (インスタンス変数)
     this.name = name;
     this.rate  = rate;
 }
+
+//変数の定義
+var money = 100000; //所持金
 var numDice = 3;
 var resultYaku = new yaku("",0);
+var diceImg = [
+  document.getElementById('diceImg1'),
+  document.getElementById('diceImg2'),
+  document.getElementById('diceImg3')
+];
 
 
 //所持金を設定
@@ -18,8 +24,7 @@ $('#cash').click(function() {
 //サイコロを振る　がクリックされたら
 $('#dice').click(function() {
     //掛け金を設定
-    var latch = $('#latch');
-    console.log(latch);
+    var latch = document.getElementById('latch').value;
 
     if(latch == "" ) {
         alert("掛け金を入力してください");
@@ -29,13 +34,19 @@ $('#dice').click(function() {
         alert("所持金が足りません");
     } else {
     	//掛け金が正しく入力された時の処理
-        var dice = throwDice();
 
-        //サイコロの画像を表示
-        console.log(dice);
+        //サイコロ画像の削除
+        $('#diceImg1').fadeOut(1000)
+        $('#diceImg2').fadeOut(1500);
+        $('#diceImg3').fadeOut(2000);
+        //サイコロを投げる
+        var dice = throwDice();
         //役とレートの取得
         getNameRate(dice);
+        var yakuName = document.getElementById('yakuName');
+        $('#yakuName').innerText = 'resultYaku.name';
 
+        //お金計算
         var changeMoney = latch * resultYaku.rate;
         money += changeMoney;
 
@@ -52,40 +63,15 @@ function throwDice() {
     }
     //サイコロイメージを表示
     for(var i=0; i<numDice; i++) {
-      var imageDice = document.createElement('img');
-      imageDice.setAttribute('alt','""');
-      imageDice.setAttribute('src',getImage(dice[0]));
-
+      var image = diceImg[i]
+      image.src="./image/" + dice[i] + ".png";
     }
+    $('#diceImg1').fadeIn(1000)
+    $('#diceImg2').fadeIn(1500);
+    $('#diceImg3').fadeIn(2000);
+
     return dice;
 }
-
-//サイコロのイメージファイル名を取得する
-function getImage(i) {
-  var imageName = "";
-  switch (i) {
-    case 1 :
-      imageName = "image/1.png";
-      break;
-    case 2 :
-      imageName = "image/2.png";
-      break;
-    case 3 :
-      imageName = "image/3.png";
-      break;
-    case 4 :
-      imageName = "image/4.png";
-      break;
-    case 5 :
-      imageName = "image/5.png";
-      break;
-    case 6 :
-      imageName = "image/6.png";
-      break;
-  }
-  return imageName ;
-}
-
 
 function getNameRate(dice) {
     //サイコロの目を昇順に並べ替える
@@ -99,7 +85,7 @@ function getNameRate(dice) {
             //return result;
         } else {
             resultYaku = new yaku("ゾロ目",3);
-            return result;
+            //return result;
         }
     } else if(dice[0]==4 && dice[1]==5 && dice[2]==6) {
         resultYaku = new yaku("シゴロ",2);
@@ -113,8 +99,9 @@ function getNameRate(dice) {
     } else if(dice[0]==1 && dice[1]==2 && dice[2]==3) {
         resultYaku = new yaku("ヒフミ",-2);
         //return result;
+    } else {
+      resultYaku = new yaku("目なし",-1);
     }
-    resultYaku = new yaku("目なし",-1);
 }
 
 //バブルソート
@@ -141,4 +128,9 @@ function change(data,i,j) {
   data[i] = data[j];
   data[j] = prov;
   return data;
+}
+
+//setTimeoutのための関数
+function waite() {
+  //何もしない
 }

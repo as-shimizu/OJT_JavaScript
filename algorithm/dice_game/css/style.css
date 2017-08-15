@@ -1,23 +1,49 @@
-#diceField {
-  background-color: #6BBF3F;
+body {
+  text-align: center;
 }
 
-#me {
-  background-color: #FFB74C;
+#diceField {
+  background-color: #B8F28C;
 }
 
 #workspace {
   background-color: #FFB74C;
 }
 
+table {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 td {
-  border: 1px #000000 solid;
   width: 150px;
   height: 80px;
   text-align: center;
 }
 
-img {
+.playerImage {
   width: 80px;
   height: 80px;
+}
+
+.diceImage {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: none;
+}
+
+/*親をオレンジ色で示す*/
+#player1 {
+  background-color: #FFB74C;
+}
+#player2 {
+  background-color: #FFB74C;
+}
+#player3 {
+  background-color: #FFB74C;
+}
+#player4 {
+  background-color: #FFB74C;
 }
