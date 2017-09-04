@@ -5,9 +5,16 @@ var yaku = function(name, rate) {
     this.rate  = rate;
 }
 
-//変数の定義
-var money = 100000; //所持金
+//定数の定義
 var numDice = 3; //サイコロの数
+var numPlayer = 4; //プレーヤー数
+var you = 2; //ユーザのプレーヤー番号
+
+//変数の定義
+var money; //所持金
+var gameNum = 0; //ゲーム回数
+var parent = 0; //親のプレーヤー番号を格納
+var child = 0; //子のプレーヤー番号を格納
 var resultYaku = new yaku("",0);　//役の名前とrate
 var diceImg = [
   document.getElementById('diceImg1'),
@@ -18,18 +25,51 @@ var diceImg = [
 //ゲームを始める
 $('#startGame').click(function() {
     //所持金の設定
-    money = document.getElementById('cash').value;
-    document.getElementById('moneyNow').innerHTML = money;
+    for (var i=0; i<numPlayer; i++) {
+        money[i] = document.getElementById('cash').value;
+    }
+    //自分の所持金を表示
+    document.getElementById('moneyNow').innerHTML = money[you];
+    //startを隠す
+    $('#start').fadeOut(1);
     //fieldとworkspaceを表示
     $('#field').fadeIn(1000);
     $('#workspace').fadeIn(1000);
-    //startを隠す
-    $('#start').fadeOut(1);
+
 });
 
 
+function oneRound(parent) {
+	alert("親は" + getPlayerName(parent) + "です。");
+	
+	for(child=0; child<numPlayer; child++) {
+		if(child==parent) {
+			//cycle;
+		}
+	}
+}
+
+function getPlayerName(num) {
+	var playerName;
+	switch (num) {
+		case 0:
+			playerName = "Player1"
+			break;
+		case 1:
+			playerName = "Player2"
+			break;
+		case 2:
+			playerName = "あなた"
+			break;
+		case 3:
+			playerName = "Player3"
+			break;
+	}
+}
+
+
 //One-Tern サイコロを振る
-$('#dice').click(function() {
+function oneTern() {
     //掛け金を設定
     var latch = document.getElementById('latch').value;
 
@@ -37,7 +77,7 @@ $('#dice').click(function() {
         alert("掛け金を入力してください");
     } else if(!(latch > 0)) {
     	alert("0以上の数字を入力してください");
-    } else if(latch > money) {
+    } else if(latch * 5 > money) {    //ピンゾロ負けした場合の支払い額(掛け金の5倍)が所持金より少ない必要がある
         alert("所持金が足りません");
     } else {
     	//掛け金が正しく入力された時の処理
@@ -63,7 +103,7 @@ $('#dice').click(function() {
         //HTMLに出力
         console.log(resultYaku.name, resultYaku.rate, changeMoney,money);
     }
-});
+}
 
 //サイコロを振る
 function throwDice() {
