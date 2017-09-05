@@ -1,20 +1,21 @@
 // 役のクラスを定義
 var yaku = function(name, rate) {
     // メンバ変数 (インスタンス変数)
-    this.name = name;
-    this.rate  = rate;
+    this.name = name; //役の名前
+    this.rate  = rate; //レイト
 }
 
 //定数の定義
 var numDice = 3; //サイコロの数
 var numPlayer = 4; //プレーヤー数
 var you = 2; //ユーザのプレーヤー番号
-
+var maxRate = 5; //最大のレイト
 //変数の定義
-var money; //所持金
+var money = new Array(numPlayer); //所持金
 var gameNum = 0; //ゲーム回数
 var parent = 0; //親のプレーヤー番号を格納
 var child = 0; //子のプレーヤー番号を格納
+var narration = document.getElementById('narration');
 var resultYaku = new yaku("",0);　//役の名前とrate
 var diceImg = [
   document.getElementById('diceImg1'),
@@ -35,74 +36,67 @@ $('#startGame').click(function() {
     //fieldとworkspaceを表示
     $('#field').fadeIn(1000);
     $('#workspace').fadeIn(1000);
-
 });
 
 
-function oneRound(parent) {
-	alert("親は" + getPlayerName(parent) + "です。");
-	
+function oneRound() {
+  narration.innerText = "親は" + getPlayerName(parent) + "です。";
 	for(child=0; child<numPlayer; child++) {
 		if(child==parent) {
-			//cycle;
+			continue;
 		}
+    //勝負する
 	}
 }
 
-function getPlayerName(num) {
-	var playerName;
-	switch (num) {
-		case 0:
-			playerName = "Player1"
-			break;
-		case 1:
-			playerName = "Player2"
-			break;
-		case 2:
-			playerName = "あなた"
-			break;
-		case 3:
-			playerName = "Player3"
-			break;
-	}
+function getLatch(child) {
+  if(child==you) {
+    $('#inputMoney').fadeIn(1);
+    $('#latch').click(function() {
+      var latch = document.getElementById('latch').value;
+      if(latch == "" ) {
+          alert("掛け金を入力してください");
+      } else if(!(latch > 0)) {
+      	alert("0以上の数字を入力してください");
+      } else if(latch * maxRate > money) {    //ピンゾロ負けした場合の支払い額(掛け金の5倍)が所持金より少ない必要がある
+          alert("所持金が足りません");
+      } else {
+      }
+    }
+  } else {
+    //掛け金を自動的に決める
+    latch = Math.floor(Math.random()*(money[child]/maxRate)) + 1
+  }
+  narration.innerText = "掛け金は" + latch + " ペリカ です";
 }
-
 
 //One-Tern サイコロを振る
 function oneTern() {
-    //掛け金を設定
-    var latch = document.getElementById('latch').value;
+    var latch = getLatch(); //掛け金を設定
+    //サイコロ画像の削除
+    $('#diceImg1').fadeOut(1);
+    $('#diceImg2').fadeOut(1);
+    $('#diceImg3').fadeOut(1);
+    $('#yakuName').fadeOut(1);
 
-    if(latch == "" ) {
-        alert("掛け金を入力してください");
-    } else if(!(latch > 0)) {
-    	alert("0以上の数字を入力してください");
-    } else if(latch * 5 > money) {    //ピンゾロ負けした場合の支払い額(掛け金の5倍)が所持金より少ない必要がある
-        alert("所持金が足りません");
-    } else {
-    	//掛け金が正しく入力された時の処理
-        //サイコロ画像の削除
-        $('#diceImg1').fadeOut(1);
-        $('#diceImg2').fadeOut(1);
-        $('#diceImg3').fadeOut(1);
-        $('#yakuName').fadeOut(1);
+    //サイコロを投げる
+    var numMenashi = 0;
+    var getYaku = false;
+    while(!(getYaku)) {
+      var dice = throwDice();
 
-        //サイコロを投げる
-        var dice = throwDice();
+    //役とレートの取得
+    getNameRate(dice);
+    var yakuName = document.getElementById('yakuName');
+    yakuName.innerHTML = resultYaku.name;
+    console.log(resultYaku.name);
 
-        //役とレートの取得
-        getNameRate(dice);
-        var yakuName = document.getElementById('yakuName');
-        yakuName.innerHTML = resultYaku.name;
-        console.log(resultYaku.name);
+    //お金計算
+    var changeMoney = latch * resultYaku.rate;
+    money += changeMoney;
 
-        //お金計算
-        var changeMoney = latch * resultYaku.rate;
-        money += changeMoney;
-
-        //HTMLに出力
-        console.log(resultYaku.name, resultYaku.rate, changeMoney,money);
-    }
+    //HTMLに出力
+    console.log(resultYaku.name, resultYaku.rate, changeMoney,money);
 }
 
 //サイコロを振る
@@ -183,4 +177,22 @@ function change(data,i,j) {
 //setTimeoutのための関数
 function waite() {
   //何もしない
+}
+
+function getPlayerName(num) {
+	var playerName;
+	switch (num) {
+		case 0:
+			playerName = "Player1"
+      return playerName;
+		case 1:
+			playerName = "Player2"
+      return playerName;
+		case 2:
+			playerName = "あなた"
+      return playerName;
+		case 3:
+			playerName = "Player3"
+      return playerName;
+	}
 }
