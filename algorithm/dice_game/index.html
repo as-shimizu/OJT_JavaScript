@@ -19,69 +19,61 @@
 
 
     <section id="field">
-      <table>
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> <img alt="" class="playerImage" src="image/player1.png">
-            <p>Player1</p>
-          </td>
-          <td> </td>
-          <td> </td>
-        </tr>
+		<table>
+			<tr>
+				<td> </td>
+				<td> </td>
+				<td> <img alt="" class="playerImage" src="image/player1.png">
+					<p>Player1</p>
+					<p id="money1"></p>
+				</td>
+				<td> </td>
+				<td> 
+					<div id="showParent"></div>
+					<div id="showChild"></div>
+				</td>
+			</tr>
 
-        <tr>
-          <td> </td>
-          <td colspan="3" rowspan="4" id="diceField">
-            <img alt="" class="diceImage" id="diceImg1" src="">
-            <img alt="" class="diceImage" id="diceImg2" src="">
-            <img alt="" class="diceImage" id="diceImg3" src=""><br>
-            <p id="yakuName"></p>
-          </td>
-          <td> </td>
-        <tr>
+			<tr>
+				<td> </td>
+				<td colspan="3" rowspan="4" id="diceField">
+					<img alt="" class="diceImage" id="diceImg1" src="">
+					<img alt="" class="diceImage" id="diceImg2" src="">
+					<img alt="" class="diceImage" id="diceImg3" src=""><br>
+					<p id="comment1"></p>
+				</td>
+				<td> </td>
+			<tr>
 
-        <tr>
-          <td> <img alt="" class="playerImage" src="image/player4.png">
-            <p>Player2</p>
-          </td>
-          <td> <img alt="" class="playerImage" src="image/player3.png">
-            <p>Player3</p>
-          </td>
-        </tr>
+			<tr>
+				<td> <img alt="" class="playerImage" src="image/player4.png">
+					<p>Player2</p>
+					<p id="money2"></p>
+				</td>
+				<td> <img alt="" class="playerImage" src="image/player3.png">
+					<p>Player3</p>
+					<p id="money4"></p>
+				</td>
+			</tr>
 
-        <tr>
-          <td> </td>
-          <td> </td>
-        <tr>
+			<tr>
+				<td> </td>
+				<td> </td>
+			<tr>
 
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> <img alt="" class="playerImage" src="image/you.png">
-            <p>You</p>
-          </td>
-          <td> </td>
-          <td> </td>
-        </tr>
-
-      <div id="image">
-      </div>
+			<tr>
+				<td> </td>
+				<td> </td>
+				<td> <img alt="" class="playerImage" src="image/you.png">
+					<p>あなた</p>
+					<p id="money3"></p>
+				</td>
+				<td> </td>
+				<td> </td>
+			</tr>
+		</table>
+      <div id="image"></div>
     </section>
-
-    <section id="workspace">
-      <p>
-      現在の所持金: <span id="moneyNow"></span> ペリカ
-      </p>
-      <div id="narration"></div><br>
-      <div id="inputMoney">
-        掛け金を決めてください
-        掛け金：<input type="textarea" id="latch" value="">
-        <input type="button" id="dice" value="サイコロを振る">
-      </div>
-    </section>
-
-
 
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/app.js"></script>
