@@ -9,16 +9,18 @@
 
   <body>
     <h3>チンチロリン</h3>
+    <p id="rule"><a href="rule.html">ルール説明</a></p>
     <section id="start">
       <div>
         所持金：<input type="textarea" id="cash" value=""> ペリカ<br>
-        <p><input type="button" id="startGame" value="ゲームを始める"></p>
+        <p><input type="button" id="moneyDecide" value="決定"></p>
       </div>
     </section>
 
 
 
     <section id="field">
+		
 		<table>
 			<tr>
 				<td> </td>
@@ -37,10 +39,15 @@
 			<tr>
 				<td> </td>
 				<td colspan="3" rowspan="4" id="diceField">
-					<img alt="" class="diceImage" id="diceImg1" src="">
-					<img alt="" class="diceImage" id="diceImg2" src="">
-					<img alt="" class="diceImage" id="diceImg3" src=""><br>
-					<p id="comment1"></p>
+					<table>
+						<tr>
+							<td><img alt="" class="diceImage" id="diceImg1" src=""></td>
+							<td><img alt="" class="diceImage" id="diceImg2" src=""></td>
+							<td><img alt="" class="diceImage" id="diceImg3" src=""></td>
+						</tr>
+					</table>
+					<p id="comment1"><input type="button" class="game" value="ゲームスタート"></p>
+					<p id="next"><input type="button" class="game" value="次のターン"></p>
 				</td>
 				<td> </td>
 			<tr>
@@ -72,7 +79,6 @@
 				<td> </td>
 			</tr>
 		</table>
-      <div id="image"></div>
     </section>
 
     <script src="js/jquery-3.2.1.js"></script>
