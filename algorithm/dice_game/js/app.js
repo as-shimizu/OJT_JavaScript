@@ -82,7 +82,7 @@ $('.game').click(function() {
         setTimeout('endGame()', 20000);
         return;
     } else {
-    	setTimeout('showNext()',21000);
+        setTimeout('showNext()',21000);
     }
 });
 
@@ -135,13 +135,13 @@ function throwDice() {
 
 //掛け金を設定
 function getLatch() {
-	latch = 0;
+    latch = 0;
     if(child==you) {
         while(latch<1 || latch>Math.floor(money[child]/maxRate)) {
-        	latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child]/maxRate) + '\n です');
-        	if(latch<1 || latch>Math.floor(money[child]/maxRate)) {
-        		alert('1-' + Math.floor(money[child]/maxRate) + 'の数字を入力してください');
-        	}
+            latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child]/maxRate) + '\n です');
+            if(latch<1 || latch>Math.floor(money[child]/maxRate)) {
+                alert('1-' + Math.floor(money[child]/maxRate) + 'の数字を入力してください');
+            }
         }
     } else {;
         latch = Math.floor(Math.random()*(money[child]/maxRate)) + 1;
@@ -150,9 +150,9 @@ function getLatch() {
     console.log("掛け金: " + latch);
 }
 
+//次へボタンを表示
 function showNext() {
-	if(end==0) {
-    	console.log(end)
+    if(end==0) {
         $('#next').fadeIn(1);
     }
 }
