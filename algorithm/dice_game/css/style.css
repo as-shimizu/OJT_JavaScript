@@ -50,3 +50,11 @@ td {
   font-size: 28px;
   font-weight: bold;
 }
+
+#inputMoney {
+  display: none;
+}
+
+#next {
+  display: none;
+}

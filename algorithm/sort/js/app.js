@@ -6,14 +6,14 @@ var data = [];
 //データを選択されたファイルから読み込む
 $('#selfile').change(function(evt) {
   data = []; //data配列の初期化
-  var file = evt.target.files; 
+  var file = evt.target.files;
   var reader = new FileReader();
   reader.readAsText(file[0]);
   reader.onload = function (ev) {
+    console.log(reader.result)
     var lines = reader.result.split("\n");
     for (var i = 0; i < lines.length - 1; i++) {
-      var column = lines[i].split(",");
-      data.push(Number(column[0]));
+      data.push(Number(lines[i]));
     }
   }
 });
@@ -44,7 +44,7 @@ $('#heap').click(function () {
     resultHeap.push('所要時間：' + time + 'ミリ秒');
     createTable(resultHeap);
 })
-//マージソート    
+//マージソート
 $('#merge').click(function () {
     var startTime = new Date(); //開始時間の取得
     var resultMerge = data.concat();
@@ -68,7 +68,7 @@ $('#quick').click(function () {
     resultQUick.push('所要時間：' + time + 'ミリ秒');
     createTable(resultQUick);
 })
-//JavaScriptのメソッド    
+//JavaScriptのメソッド
 $('#js_method').click(function () {
     var startTime = new Date(); //開始時間の取得
     var resultJS = data.concat();
@@ -103,7 +103,7 @@ function heapSort(data) {
     var aryH = data.concat();
     var Heap = [];　//ヒープ構造の根(一番小さい値)を順に格納
     var outputAry = []; //1回のsortHeap結果のヒープ構造を一時的に格納
-    
+
     while (aryH.length > 0) {
         outputAry = sortHeap(aryH);　//ヒープ構造を作り、outputAryに格納
         Heap.push(outputAry[0]);　//ヒープ構造の根(一番小さい値)をHeapに格納
@@ -117,7 +117,7 @@ function heapSort(data) {
 //根に一番小さい値をもってくる関数
 function sortHeap(data) {
     var hplength = Math.floor(data.length / 2);　//ヒープ構造の長さはデータの半分(小数点以下切り捨て)
-    for (var i = hplength; i > 0; i = i - 1) {
+    for (var i = hplength; i > 0; i--) {
     	//親と子を比較し、一番小さい値を親に持ってくる
     	//親がi番目のデータ(data[i-1])の時、子は2*i番目(data[2*i -1])と(2*i)+1番目(data[2*i])
         if (data[i - 1] > data[2 * i] && 2 * i < data.length) {
@@ -136,7 +136,7 @@ function mergeSort(data) {
     var inputSize = 0;
     var inputArray = data.concat();//はじめはdataに含まれる数値は1つ1つ長さ1の配列と考える
     var outputArray = [];
-    
+
     while (inputArray.length != 1) {
         j = 0;
         inputSize = inputArray.length - 1;
@@ -163,7 +163,7 @@ function mergeSort(data) {
 //昇順に並んだ2つのデータセットを1つにあわせる
 function merge(d1, d2) {
     var newData = [];
-    var i1 = 0; 
+    var i1 = 0;
     var i2 = 0;
     var check = 0;
     if (d1.length > 1) { //d1,d2を確認してdata1,data2に格納する
@@ -260,7 +260,7 @@ function devide(ary0) {
     } else {
         var compare = ary0[0];　
     }
-    
+
     var part1 = [];
     var part2 = [];
     for (var i = 0; i < ary0.length; i++) {
@@ -304,11 +304,11 @@ function createTable(result) {
     var row = [];
     //"test"にふくまれる、id=viewTableのtable Elementを一度消す
     document.getElementById("test").removeChild(viewTable);
-    
+
     //新たにid=viewTableを作成する
     var table = document.createElement("table");
     table.setAttribute('id', 'viewTable');
-    
+
     //作成したviewTableにデータをいれる
     for (var i = 0; i < result.length; i++) {
         row.push(table.insertRow(-1));
