@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>チンチロリン</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <h3>チンチロリン</h3>
+    <p id="rule"><a href="rule.html">ルール説明</a></p>
+    <section id="start">
+      <div>
+        所持金：<input type="textarea" id="cash" value=""> ペリカ<br>
+        <p><input type="button" id="moneyDecide" value="決定"></p>
+      </div>
+    </section>
+
+
+
+    <section id="field">
+		
+		<table>
+			<tr>
+				<td> </td>
+				<td> </td>
+				<td> <img alt="" class="playerImage" src="image/player1.png">
+					<p>Player1</p>
+					<p id="money1"></p>
+				</td>
+				<td> </td>
+				<td> 
+					<div id="showParent"></div>
+					<div id="showChild"></div>
+				</td>
+			</tr>
+
+			<tr>
+				<td> </td>
+				<td colspan="3" rowspan="4" id="diceField">
+					<table>
+						<tr>
+							<td><img alt="" class="diceImage" id="diceImg1" src=""></td>
+							<td><img alt="" class="diceImage" id="diceImg2" src=""></td>
+							<td><img alt="" class="diceImage" id="diceImg3" src=""></td>
+						</tr>
+					</table>
+					<p id="comment1"><input type="button" class="game" value="ゲームスタート"></p>
+					<p id="next"><input type="button" class="game" value="次のターン"></p>
+				</td>
+				<td> </td>
+			<tr>
+
+			<tr>
+				<td> <img alt="" class="playerImage" src="image/player4.png">
+					<p>Player2</p>
+					<p id="money2"></p>
+				</td>
+				<td> <img alt="" class="playerImage" src="image/player3.png">
+					<p>Player3</p>
+					<p id="money4"></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td> </td>
+				<td> </td>
+			<tr>
+
+			<tr>
+				<td> </td>
+				<td> </td>
+				<td> <img alt="" class="playerImage" src="image/you.png">
+					<p>あなた</p>
+					<p id="money3"></p>
+				</td>
+				<td> </td>
+				<td> </td>
+			</tr>
+		</table>
+    </section>
+
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/app.js"></script>
+
+  </body>
+</html>

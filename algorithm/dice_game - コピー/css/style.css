@@ -1,0 +1,60 @@
+body {
+  text-align: center;
+}
+
+#diceField {
+  background-color: #B8F28C;
+}
+
+#field {
+  display: none;
+}
+#workspace {
+  background-color: #FFB74C;
+  display: none;
+}
+
+#start {
+  background-color: #FFB74C;
+  margin: 20px;
+  text-align: center;
+}
+
+table {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td {
+  width: 150px;
+  height: 80px;
+  text-align: center;
+}
+
+.playerImage {
+  width: 80px;
+  height: 80px;
+}
+
+.diceImage {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: none;
+}
+
+#yakuName {
+  display: none;
+  color: #777777;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#inputMoney {
+  display: none;
+}
+
+#next {
+  display: none;
+}

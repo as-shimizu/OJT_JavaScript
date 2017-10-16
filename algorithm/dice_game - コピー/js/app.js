@@ -23,7 +23,7 @@ var yakuChild = new yaku("",0);　//子の役の名前とrate
 var resultYaku = new yaku("",0);　//役の名前とrateを一時的に保存
 var end = 0; //ゲーム中は0, ゲーム終了したら1
 var winner; //勝者を格納
-var a = 1;
+
 //html上の場所を定義
 var showParent = document.getElementById('showParent');　//親を表示する<p>
 var showChild = document.getElementById('showChild');　//子を表示する<p>
@@ -68,48 +68,31 @@ $('.game').click(function() {
     $('#diceImg1').fadeOut(1);
     $('#diceImg2').fadeOut(1);
     $('#diceImg3').fadeOut(1);
-    comment1.innerText = "";
-
-    viewParentChild().then(function(result) {
-      oneChild().then(function(result) {
-        nextGame();
-      });
-    });
+    comment1.innerText = ""
+    
+    //親と子の表示
+    setTimeout('comment1.innerText = "親は" + getPlayerName(parent) + "です。"',1000);
+    showParent.innerText = "親: " + getPlayerName(parent);
+    setTimeout('comment1.innerText = getPlayerName(child) + "の番です。"',3000);
+    showChild.innerText = "子: " + getPlayerName(child) ;
+    console.log("親：　" + getPlayerName(parent) + "子：　" + getPlayerName(child));
+    //親と子の勝負
+    setTimeout('oneChild()',5000);
+    if(child==numPlayer-2 && parent==numPlayer-1) {
+        setTimeout('endGame()', 20000);
+        return;
+    } else {
+        setTimeout('showNext()',21000);
+    }
 });
 
-//親と子の表示
-function viewParentChild() {
-    return new Promise(function(resolve) {
-      setTimeout('comment1.innerText = "親は" + getPlayerName(parent) + "です。"',1000);
-      showParent.innerText = "親: " + getPlayerName(parent);
-      setTimeout('comment1.innerText = getPlayerName(child) + "の番です。"',3000);
-      showChild.innerText = "子: " + getPlayerName(child);
-      console.log("親：　" + getPlayerName(parent) + "子：　" + getPlayerName(child));
-      setTimeout(function(){resolve(null)},4000);
-    });
-}
-
-function nextGame() {
-  return new Promise(function(resolve, reject) {
-      if(child==numPlayer-2 && parent==numPlayer-1) {
-          endGame();
-          return;
-      } else {
-          showNext();
-      }
-      resolve(null);
-  });
-}
 
 //勝負する
 function oneChild() {
-  return new Promise(function(resolve, reject) {
-      setTimeout('getLatch()',1000); //掛け金を設定
-      setTimeout('getParentYaku()', 3000);　//親がサイコロを振る
-      setTimeout('getChildYaku()', 8000);　//子がサイコロを振る
-      setTimeout('resultTarn()', 13000);　//結果を算出、表示
-      setTimeout(function(){resolve(null)},14000);
-  });
+    getLatch(); //掛け金を設定    
+    setTimeout('getParentYaku()', 2000);　//親がサイコロを振る
+    setTimeout('getChildYaku()', 7000);　//子がサイコロを振る
+    setTimeout('resultTarn()', 12000);　//結果を算出、表示
 }
 //子が役の取得
 function getChildYaku() {
@@ -118,7 +101,7 @@ function getChildYaku() {
     setTimeout('throwDice()',1000);　//サイコロを投げる
     setTimeout('getNameRate(dice)',2000); //役とレートの取得
     setTimeout('yakuChild = $.extend(true, {}, resultYaku)', 3000);
-    setTimeout('comment1.innerHTML = resultYaku.name',3000);
+    setTimeout('comment1.innerHTML = resultYaku.name',3000);Z
     setTimeout('console.log(yakuChild)',3000);
 }
 
