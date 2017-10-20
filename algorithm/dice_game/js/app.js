@@ -80,12 +80,17 @@ $('.game').click(function() {
 //親と子の表示
 function viewParentChild() {
     return new Promise(function(resolve) {
-      setTimeout('comment1.innerText = "親は" + getPlayerName(parent) + "です。"',1000);
       showParent.innerText = "親: " + getPlayerName(parent);
-      setTimeout('comment1.innerText = getPlayerName(child) + "の番です。"',3000);
       showChild.innerText = "子: " + getPlayerName(child);
       console.log("親：　" + getPlayerName(parent) + "子：　" + getPlayerName(child));
-      setTimeout(function(){resolve(null)},4000);
+
+      var message1 = "親は" + getPlayerName(parent) + "です。";
+      var message2 = "子は" + getPlayerName(child) + "です。";
+      viewOnField(message1).then(function(result) {
+        viewOnField(message2).then(function(result) {
+          resolve(null);
+        });
+      });
     });
 }
 
@@ -104,66 +109,101 @@ function nextGame() {
 //勝負する
 function oneChild() {
   return new Promise(function(resolve, reject) {
-      setTimeout('getLatch()',1000); //掛け金を設定
-      setTimeout('getParentYaku()', 3000);　//親がサイコロを振る
-      setTimeout('getChildYaku()', 8000);　//子がサイコロを振る
-      setTimeout('resultTarn()', 13000);　//結果を算出、表示
-      setTimeout(function(){resolve(null)},14000);
+      getLatch().then(function(result){
+        getParentYaku().then(function(result){
+          $('#diceImg1').fadeOut(1);
+          $('#diceImg2').fadeOut(1);
+          $('#diceImg3').fadeOut(1);
+          getChildYaku().then(function(result){
+            resultTarn().then(function(result){
+              resolve(null);
+            });
+          });
+        });
+      });
   });
 }
 //子が役の取得
 function getChildYaku() {
-    comment1.innerText = "子がサイコロを振ります";
-    dice = []; //サイコロ配列を初期化
-    setTimeout('throwDice()',1000);　//サイコロを投げる
-    setTimeout('getNameRate(dice)',2000); //役とレートの取得
-    setTimeout('yakuChild = $.extend(true, {}, resultYaku)', 3000);
-    setTimeout('comment1.innerHTML = resultYaku.name',3000);
-    setTimeout('console.log(yakuChild)',3000);
+    return new Promise(function(resolve, reject) {
+      comment1.innerText = "子がサイコロを振ります";
+      dice = [];　//サイコロ配列を初期化
+      throwDice().then(function(result){
+        getNameRate();
+          comment1.innerHTML = resultYaku.name;
+          yakuChild = $.extend(true, {}, resultYaku);
+          console.log(yakuChild);
+          resolve(null);
+      });
+    });
 }
 
 //親が役の取得
 function getParentYaku() {
-    comment1.innerText = "親がサイコロを振ります";
-    dice = [];　//サイコロ配列を初期化
-    setTimeout('throwDice()',1000);　//サイコロを投げる
-    setTimeout('getNameRate()',2000); //役とレートの取得
-    setTimeout('comment1.innerHTML = resultYaku.name',3000);
-    setTimeout('yakuParent = $.extend(true, {}, resultYaku)',3000);
-    setTimeout('console.log(yakuParent)',3000);
+    return new Promise(function(resolve, reject) {
+      comment1.innerText = "親がサイコロを振ります";
+      dice = [];　//サイコロ配列を初期化
+      throwDice().then(function(result){
+        getNameRate();
+        comment1.innerHTML = resultYaku.name;
+        yakuParent = $.extend(true, {}, resultYaku);
+        console.log(yakuParent);
+        resolve(null);
+      });
+    });
 }
 
 
 //サイコロを振る
 function throwDice() {
-    for(var i=0; i<numDice; i++) {
-        dice.push(Math.floor(Math.random()*6) + 1);
+    return new Promise(function(resolve, reject) {
+        for(var i=0; i<numDice; i++) {
+            dice.push(Math.floor(Math.random()*6) + 1);
+        }
+        //サイコロイメージを表示
+        for(var i=0; i<numDice; i++) {
+          var image = diceImg[i]
+          image.src="./image/" + dice[i] + ".png";
+        }
+        wait().then(function(result){
+          viewDice().then(function(result){
+              resolve(null);
+          });
+        });
+    });
+    function viewDice() {
+      return new Promise(function(resolve, reject) {
+          $('#diceImg1').fadeIn(1000);
+          $('#diceImg2').fadeIn(2000);
+          $('#diceImg3').fadeIn(3000);
+          setTimeout(function(){resolve(null)},3000);
+      });
     }
-    //サイコロイメージを表示
-    for(var i=0; i<numDice; i++) {
-      var image = diceImg[i]
-      image.src="./image/" + dice[i] + ".png";
+    function wait() {
+      return new Promise(function(resolve, reject) {
+          setTimeout(function(){resolve(null)},1000);
+      });
     }
-    $('#diceImg1').fadeIn(1000);
-    $('#diceImg2').fadeIn(1000);
-    $('#diceImg3').fadeIn(1000);
 }
 
 //掛け金を設定
 function getLatch() {
-    latch = 0;
-    if(child==you) {
-        while(latch<1 || latch>Math.floor(money[child]/maxRate)) {
-            latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child]/maxRate) + '\n です');
-            if(latch<1 || latch>Math.floor(money[child]/maxRate)) {
-                alert('1-' + Math.floor(money[child]/maxRate) + 'の数字を入力してください');
+    return new Promise(function(resolve, reject) {
+        latch = 0;
+        if(child==you) {
+            while(latch<1 || latch>Math.floor(money[child]/maxRate)) {
+                latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child]/maxRate) + '\n です');
+                if(latch<1 || latch>Math.floor(money[child]/maxRate)) {
+                    alert('1-' + Math.floor(money[child]/maxRate) + 'の数字を入力してください');
+                }
             }
+        } else {;
+            latch = Math.floor(Math.random()*(money[child]/maxRate)) + 1;
         }
-    } else {;
-        latch = Math.floor(Math.random()*(money[child]/maxRate)) + 1;
-    }
-    comment1.innerText = "掛け金は" + latch + " ペリカ です";
-    console.log("掛け金: " + latch);
+        comment1.innerText = "掛け金は" + latch + " ペリカ です";
+        console.log("掛け金: " + latch);
+        resolve(null)
+    });
 }
 
 //次へボタンを表示
@@ -180,40 +220,43 @@ function showChangeMoney(from, to) {
 
 //結果を表示
 function resultTarn() {
-    if(yakuParent.rate > yakuChild.rate) {
-        comment1.innerText = "親の勝ちです";
-        if(yakuChild.rate<-1) {
-            changeMoney = yakuChild.rate * latch * (-1);
+    return new Promise(function(resolve, reject) {
+        if(yakuParent.rate > yakuChild.rate) {
+            comment1.innerText = "親の勝ちです";
+            if(yakuChild.rate<-1) {
+                changeMoney = yakuChild.rate * latch * (-1);
+            } else {
+                changeMoney = yakuParent.rate * latch;
+            }
+            setTimeout('showChangeMoney("子", "親")',2000);
+            //支払い
+            money[child] = Number(money[child]) - changeMoney;
+            money[parent] = Number(money[parent]) + changeMoney;
+        } else if(yakuParent.rate == yakuChild.rate) {
+            comment1.innerText = "引き分けです";
+            setTimeout('comment1.innerText = "支払いはありません"', 2000);
         } else {
-            changeMoney = yakuParent.rate * latch;
+            comment1.innerText = "子の勝ちです";
+            if(yakuParent.rate<-1) {
+                changeMoney = yakuParent.rate * latch * (-1);
+            } else {
+                changeMoney = yakuChild.rate * latch;
+            }
+            setTimeout('showChangeMoney("親","子")', 2000);
+            //支払い
+            money[parent] = Number(money[parent]) - changeMoney;
+            money[child] = Number(money[child]) + changeMoney;
+            //親の所持金がなくなったらゲーム終了
+            if(money[parent] < 0) {
+                setTimeout('comment1.innerText = "親の所持金がなくなりました"', 3000);
+                end = 1;
+                showMoney();
+                setTimeout('endGame()',4000);
+            }
         }
-        setTimeout('showChangeMoney("子", "親")',2000);
-        //支払い
-        money[child] = Number(money[child]) - changeMoney;
-        money[parent] = Number(money[parent]) + changeMoney;
-    } else if(yakuParent.rate == yakuChild.rate) {
-        comment1.innerText = "引き分けです";
-        setTimeout('comment1.innerText = "支払いはありません"', 2000);
-    } else {
-        comment1.innerText = "子の勝ちです";
-        if(yakuParent.rate<-1) {
-            changeMoney = yakuParent.rate * latch * (-1);
-        } else {
-            changeMoney = yakuChild.rate * latch;
-        }
-        setTimeout('showChangeMoney("親","子")', 2000);
-        //支払い
-        money[parent] = Number(money[parent]) - changeMoney;
-        money[child] = Number(money[child]) + changeMoney;
-        //親の所持金がなくなったらゲーム終了
-        if(money[parent] < 0) {
-            setTimeout('comment1.innerText = "親の所持金がなくなりました"', 3000);
-            end = 1;
-            showMoney();
-            setTimeout('endGame()',4000);
-        }
-    }
-    setTimeout('showMoney()',5000);
+        setTimeout('showMoney()',3000);
+        setTimeout(function(){resolve(null)},4000);
+    });
 }
 
 function endGame() {
@@ -334,4 +377,11 @@ function wait(waitSecond) {
         var nowTime = new Date();
         nowWait = nowTime.getTime() - startTime.getTime();
     }
+}
+
+function viewOnField(message) {
+  return new Promise(function(resolve) {
+    comment1.innerText = message;
+    setTimeout(function(){resolve(null)},1000);
+  });
 }
