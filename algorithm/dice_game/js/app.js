@@ -44,8 +44,8 @@ $('#moneyDecide').click(function () {
         money[i] = Number(document.getElementById('cash').value);
     }
     showMoney();　 //所持金を表示
-    $('#start').fadeOut(1);　 //startを隠す　
-    $('#field').fadeIn(500);　 //fieldを表示
+    $('#start').fadeOut(1); //startを隠す　
+    $('#field').fadeIn(500); //fieldを表示
 });
 $('.game').click(function () {
     $('#next').fadeOut(1);
@@ -246,7 +246,7 @@ function resultTarn() {
         }
         setTimeout('showMoney()', 3000);
         setTimeout(function () {
-            resolve(null)
+            resolve(null);
         }, 4000);
     });
 }
@@ -267,7 +267,7 @@ function showWinner() {
 }
 
 function getWinPlayer() {
-    var sortMoney = new Array(NUM_PLAYER)
+    var sortMoney = new Array(NUM_PLAYER);
     sortMoney = bubleSort(money);
     for (var i = 0; i < NUM_PLAYER; i++) {
         if (money[i] == sortMoney[NUM_PLAYER - 1]) {
@@ -339,16 +339,16 @@ function getPlayerName(num) {
     var playerName;
     switch (num) {
     case 0:
-        playerName = "Player1"
+        playerName = "Player1";
         return playerName;
     case 1:
-        playerName = "Player2"
+        playerName = "Player2";
         return playerName;
     case 2:
-        playerName = "あなた"
+        playerName = "あなた";
         return playerName;
     case 3:
-        playerName = "Player3"
+        playerName = "Player3";
         return playerName;
     }
 }
