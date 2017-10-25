@@ -1,8 +1,7 @@
 // 役のクラスを定義
 var yaku = function (name, rate) {
-    // メンバ変数 (インスタンス変数)
-    this.name = name; //役の名前
-    this.rate = rate; //レイト
+    this.name = name;
+    this.rate = rate;
 }
 //定数の定義
 var NUM_DICE = 3;
@@ -357,15 +356,6 @@ function getPlayerName(num) {
 function showMoney() {
     for (var i = 0; i < NUM_PLAYER; i++) {
         moneyView[i].innerText = "所持金: " + money[i];
-    }
-}
-
-function wait(waitSecond) {
-    var startTime = new Date(); //開始時間の取得
-    var nowWait = 0;
-    while (nowWait <= waitSecond) {
-        var nowTime = new Date();
-        nowWait = nowTime.getTime() - startTime.getTime();
     }
 }
 
