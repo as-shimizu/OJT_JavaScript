@@ -5,12 +5,12 @@ var yaku = function (name, rate) {
     this.rate = rate; //レイト
 }
 //定数の定義
-var numDice = 3; //サイコロの数
-var numPlayer = 4; //プレーヤー数
-var you = 2; //ユーザのプレーヤー番号
-var maxRate = 5; //最大のレイト
+var NUM_DICE = 3; //サイコロの数
+var NUM_PLAYER = 4; //プレーヤー数
+var YOUR_ID = 2; //ユーザのプレーヤー番号
+var MAX_RATE = 5; //最大のレイト
 //変数の定義
-var money = new Array(numPlayer); //所持金
+var money = new Array(NUM_PLAYER); //所持金
 var parent = 0; //親のプレーヤー番号を格納
 var child = 0; //子のプレーヤー番号を格納
 var latch; //掛け金を格納
@@ -41,7 +41,7 @@ var moneyView = [
 //ゲームを始める
 $('#moneyDecide').click(function () {
     //所持金の設定
-    for (var i = 0; i < numPlayer; i++) {
+    for (var i = 0; i < NUM_PLAYER; i++) {
         money[i] = Number(document.getElementById('cash').value);
     }
     showMoney();　 //所持金を表示
@@ -51,7 +51,7 @@ $('#moneyDecide').click(function () {
 $('.game').click(function () {
     $('#next').fadeOut(1);
     //親と子の設定
-    if (child == numPlayer - 1) {
+    if (child == NUM_PLAYER - 1) {
         parent++;
         child = 0;
     } else {
@@ -89,7 +89,7 @@ function viewParentChild() {
 
 function nextGame() {
     return new Promise(function (resolve, reject) {
-        if (child == numPlayer - 2 && parent == numPlayer - 1) {
+        if (child == NUM_PLAYER - 2 && parent == NUM_PLAYER - 1) {
             endGame();
             return;
         } else {
@@ -146,11 +146,11 @@ function getParentYaku() {
 //サイコロを振る
 function throwDice() {
     return new Promise(function (resolve, reject) {
-        for (var i = 0; i < numDice; i++) {
+        for (var i = 0; i < NUM_DICE; i++) {
             dice.push(Math.floor(Math.random() * 6) + 1);
         }
         //サイコロイメージを表示
-        for (var i = 0; i < numDice; i++) {
+        for (var i = 0; i < NUM_DICE; i++) {
             var image = diceImg[i]
             image.src = "./image/" + dice[i] + ".png";
         }
@@ -184,15 +184,15 @@ function throwDice() {
 function getLatch() {
     return new Promise(function (resolve, reject) {
         latch = 0;
-        if (child == you) {
-            while (latch < 1 || latch > Math.floor(money[child] / maxRate)) {
-                latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child] / maxRate) + '\n です');
-                if (latch < 1 || latch > Math.floor(money[child] / maxRate)) {
-                    alert('1-' + Math.floor(money[child] / maxRate) + 'の数字を入力してください');
+        if (child == YOUR_ID) {
+            while (latch < 1 || latch > Math.floor(money[child] / MAX_RATE)) {
+                latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child] / MAX_RATE) + '\n です');
+                if (latch < 1 || latch > Math.floor(money[child] / MAX_RATE)) {
+                    alert('1-' + Math.floor(money[child] / MAX_RATE) + 'の数字を入力してください');
                 }
             }
         } else {;
-            latch = Math.floor(Math.random() * (money[child] / maxRate)) + 1;
+            latch = Math.floor(Math.random() * (money[child] / MAX_RATE)) + 1;
         }
         comment1.innerText = "掛け金は" + latch + " ペリカ です";
         console.log("掛け金: " + latch);
@@ -268,10 +268,10 @@ function showWinner() {
 }
 
 function getWinPlayer() {
-    var sortMoney = new Array(numPlayer)
+    var sortMoney = new Array(NUM_PLAYER)
     sortMoney = bubleSort(money);
-    for (var i = 0; i < numPlayer; i++) {
-        if (money[i] == sortMoney[numPlayer - 1]) {
+    for (var i = 0; i < NUM_PLAYER; i++) {
+        if (money[i] == sortMoney[NUM_PLAYER - 1]) {
             winner = i;
         }
     }
@@ -355,7 +355,7 @@ function getPlayerName(num) {
 }
 
 function showMoney() {
-    for (var i = 0; i < numPlayer; i++) {
+    for (var i = 0; i < NUM_PLAYER; i++) {
         moneyView[i].innerText = "所持金: " + money[i];
     }
 }
