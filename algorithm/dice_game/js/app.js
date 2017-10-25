@@ -5,28 +5,28 @@ var yaku = function (name, rate) {
     this.rate = rate; //レイト
 }
 //定数の定義
-var NUM_DICE = 3; //サイコロの数
-var NUM_PLAYER = 4; //プレーヤー数
-var YOUR_ID = 2; //ユーザのプレーヤー番号
-var MAX_RATE = 5; //最大のレイト
+var NUM_DICE = 3;
+var NUM_PLAYER = 4;
+var YOUR_ID = 2;
+var MAX_RATE = 5;
 //変数の定義
-var money = new Array(NUM_PLAYER); //所持金
-var parent = 0; //親のプレーヤー番号を格納
-var child = 0; //子のプレーヤー番号を格納
-var latch; //掛け金を格納
-var dice = []; //振ったサイコロの目を格納
-var changeMoney; //支払額
-var yakuParent = new yaku("", 0);　 //親の役の名前とrate
-var yakuChild = new yaku("", 0);　 //子の役の名前とrate
-var resultYaku = new yaku("", 0);　 //役の名前とrateを一時的に保存
+var money = new Array(NUM_PLAYER);
+var parentId = 0;
+var childId = 0;
+var latch;
+var diceResult = [];
+var payMoney;
+var yakuParent = new yaku("", 0);
+var yakuChild = new yaku("", 0);
+var resultYaku = new yaku("", 0); //yaku一時保存用
 var end = 0; //ゲーム中は0, ゲーム終了したら1
-var winner; //勝者を格納
+var winner;
 var a = 1;
 //html上の場所を定義
-var showParent = document.getElementById('showParent');　 //親を表示する<p>
-var showChild = document.getElementById('showChild');　 //子を表示する<p>
-var comment1 = document.getElementById('comment1');　 //コメントを表示する<p>
-var next = document.getElementById('next');　 //次のターンボタン
+var showParent = document.getElementById('showParent');
+var showChild = document.getElementById('showChild');
+var comment1 = document.getElementById('comment1');
+var next = document.getElementById('next');
 var diceImg = [
     document.getElementById('diceImg1'),
     document.getElementById('diceImg2'),
@@ -51,14 +51,14 @@ $('#moneyDecide').click(function () {
 $('.game').click(function () {
     $('#next').fadeOut(1);
     //親と子の設定
-    if (child == NUM_PLAYER - 1) {
-        parent++;
-        child = 0;
+    if (childId == NUM_PLAYER - 1) {
+        parentId++;
+        childId = 0;
     } else {
-        child++;
+        childId++;
     }
-    if (parent == child) {
-        child++;
+    if (parentId == childId) {
+        childId++;
     }
     //サイコロ画像とコメントの削除
     $('#diceImg1').fadeOut(1);
@@ -74,11 +74,11 @@ $('.game').click(function () {
 //親と子の表示
 function viewParentChild() {
     return new Promise(function (resolve) {
-        showParent.innerText = "親: " + getPlayerName(parent);
-        showChild.innerText = "子: " + getPlayerName(child);
-        console.log("親：　" + getPlayerName(parent) + "子：　" + getPlayerName(child));
-        var message1 = "親は" + getPlayerName(parent) + "です。";
-        var message2 = "子は" + getPlayerName(child) + "です。";
+        showParent.innerText = "親: " + getPlayerName(parentId);
+        showChild.innerText = "子: " + getPlayerName(childId);
+        console.log("親：　" + getPlayerName(parentId) + "子：　" + getPlayerName(childId));
+        var message1 = "親は" + getPlayerName(parentId) + "です。";
+        var message2 = "子は" + getPlayerName(childId) + "です。";
         viewOnField(message1).then(function (result) {
             viewOnField(message2).then(function (result) {
                 resolve(null);
@@ -89,7 +89,7 @@ function viewParentChild() {
 
 function nextGame() {
     return new Promise(function (resolve, reject) {
-        if (child == NUM_PLAYER - 2 && parent == NUM_PLAYER - 1) {
+        if (childId == NUM_PLAYER - 2 && parentId == NUM_PLAYER - 1) {
             endGame();
             return;
         } else {
@@ -119,7 +119,7 @@ function oneChild() {
 function getChildYaku() {
     return new Promise(function (resolve, reject) {
         comment1.innerText = "子がサイコロを振ります";
-        dice = [];　 //サイコロ配列を初期化
+        diceResult = [];　 //サイコロ配列を初期化
         throwDice().then(function (result) {
             getNameRate();
             comment1.innerHTML = resultYaku.name;
@@ -133,7 +133,7 @@ function getChildYaku() {
 function getParentYaku() {
     return new Promise(function (resolve, reject) {
         comment1.innerText = "親がサイコロを振ります";
-        dice = [];　 //サイコロ配列を初期化
+        diceResult = [];　 //サイコロ配列を初期化
         throwDice().then(function (result) {
             getNameRate();
             comment1.innerHTML = resultYaku.name;
@@ -184,15 +184,15 @@ function throwDice() {
 function getLatch() {
     return new Promise(function (resolve, reject) {
         latch = 0;
-        if (child == YOUR_ID) {
-            while (latch < 1 || latch > Math.floor(money[child] / MAX_RATE)) {
-                latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[child] / MAX_RATE) + '\n です');
-                if (latch < 1 || latch > Math.floor(money[child] / MAX_RATE)) {
-                    alert('1-' + Math.floor(money[child] / MAX_RATE) + 'の数字を入力してください');
+        if (childId == YOUR_ID) {
+            while (latch < 1 || latch > Math.floor(money[childId] / MAX_RATE)) {
+                latch = prompt('掛け金を入力してください\n\n入力できる掛け金は \n 1-' + Math.floor(money[childId] / MAX_RATE) + '\n です');
+                if (latch < 1 || latch > Math.floor(money[childId] / MAX_RATE)) {
+                    alert('1-' + Math.floor(money[childId] / MAX_RATE) + 'の数字を入力してください');
                 }
             }
         } else {;
-            latch = Math.floor(Math.random() * (money[child] / MAX_RATE)) + 1;
+            latch = Math.floor(Math.random() * (money[childId] / MAX_RATE)) + 1;
         }
         comment1.innerText = "掛け金は" + latch + " ペリカ です";
         console.log("掛け金: " + latch);
@@ -207,7 +207,7 @@ function showNext() {
 }
 //支払額を表示
 function showChangeMoney(from, to) {
-    comment1.innerText = from + "は" + to + "に" + changeMoney + "ペリカを支払います";
+    comment1.innerText = from + "は" + to + "に" + payMoney + "ペリカを支払います";
 }
 //結果を表示
 function resultTarn() {
@@ -215,30 +215,30 @@ function resultTarn() {
         if (yakuParent.rate > yakuChild.rate) {
             comment1.innerText = "親の勝ちです";
             if (yakuChild.rate < -1) {
-                changeMoney = yakuChild.rate * latch * (-1);
+                payMoney = yakuChild.rate * latch * (-1);
             } else {
-                changeMoney = yakuParent.rate * latch;
+                payMoney = yakuParent.rate * latch;
             }
             setTimeout('showChangeMoney("子", "親")', 2000);
             //支払い
-            money[child] = Number(money[child]) - changeMoney;
-            money[parent] = Number(money[parent]) + changeMoney;
+            money[childId] = Number(money[childId]) - payMoney;
+            money[parentId] = Number(money[parentId]) + payMoney;
         } else if (yakuParent.rate == yakuChild.rate) {
             comment1.innerText = "引き分けです";
             setTimeout('comment1.innerText = "支払いはありません"', 2000);
         } else {
             comment1.innerText = "子の勝ちです";
             if (yakuParent.rate < -1) {
-                changeMoney = yakuParent.rate * latch * (-1);
+                payMoney = yakuParent.rate * latch * (-1);
             } else {
-                changeMoney = yakuChild.rate * latch;
+                payMoney = yakuChild.rate * latch;
             }
             setTimeout('showChangeMoney("親","子")', 2000);
             //支払い
-            money[parent] = Number(money[parent]) - changeMoney;
-            money[child] = Number(money[child]) + changeMoney;
+            money[parentId] = Number(money[parentId]) - payMoney;
+            money[childId] = Number(money[childId]) + payMoney;
             //親の所持金がなくなったらゲーム終了
-            if (money[parent] < 0) {
+            if (money[parentId] < 0) {
                 setTimeout('comment1.innerText = "親の所持金がなくなりました"', 3000);
                 end = 1;
                 showMoney();
@@ -280,29 +280,29 @@ function getWinPlayer() {
 
 function getNameRate() {
     //サイコロの目を昇順に並べ替える
-    dice = bubleSort(dice);
+    diceResult = bubleSort(diceResult);
     //出た目によってnameとrateを決める
-    if (dice[0] == dice[1] && dice[0] == dice[2]) {
-        if (dice[0] == 1) {
+    if (diceResult[0] == diceResult[1] && diceResult[0] == diceResult[2]) {
+        if (diceResult[0] == 1) {
             resultYaku.name = "ピンゾロ";
             resultYaku.rate = 5;
         } else {
             resultYaku.name = "ゾロ目";
             resultYaku.rate = 3;
         }
-    } else if (dice[0] == 4 && dice[1] == 5 && dice[2] == 6) {
+    } else if (diceResult[0] == 4 && diceResult[1] == 5 && diceResult[2] == 6) {
         resultYaku.name = "シゴロ";
         resultYaku.rate = 2;
         //return result;
-    } else if (dice[0] == dice[1]) {
-        resultYaku.name = dice[2] + "の目";
+    } else if (diceResult[0] == diceResult[1]) {
+        resultYaku.name = diceResult[2] + "の目";
         resultYaku.rate = 1;
         //return result;
-    } else if (dice[1] == dice[2]) {
-        resultYaku.name = dice[0] + "の目";
+    } else if (diceResult[1] == diceResult[2]) {
+        resultYaku.name = diceResult[0] + "の目";
         resultYaku.rate = 1;
         //return result;
-    } else if (dice[0] == 1 && dice[1] == 2 && dice[2] == 3) {
+    } else if (diceResult[0] == 1 && diceResult[1] == 2 && diceResult[2] == 3) {
         resultYaku.name = "ヒフミ";
         resultYaku.rate = -2;
         //return result;
