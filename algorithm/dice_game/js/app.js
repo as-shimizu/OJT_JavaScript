@@ -279,19 +279,15 @@ function getNameRate() {
     } else if (diceResult[0] == 4 && diceResult[1] == 5 && diceResult[2] == 6) {
         resultYaku.name = "シゴロ";
         resultYaku.rate = 2;
-        //return result;
     } else if (diceResult[0] == diceResult[1]) {
         resultYaku.name = diceResult[2] + "の目";
         resultYaku.rate = 1;
-        //return result;
     } else if (diceResult[1] == diceResult[2]) {
         resultYaku.name = diceResult[0] + "の目";
         resultYaku.rate = 1;
-        //return result;
     } else if (diceResult[0] == 1 && diceResult[1] == 2 && diceResult[2] == 3) {
         resultYaku.name = "ヒフミ";
         resultYaku.rate = -2;
-        //return result;
     } else {
         resultYaku.name = "クズ";
         resultYaku.rate = -1;
