@@ -31,7 +31,7 @@ var diceImg = [
     document.getElementById('diceImg2'),
     document.getElementById('diceImg3')
 ];
-var moneyView = [
+var moneyShow = [
     document.getElementById('money1'),
     document.getElementById('money2'),
     document.getElementById('money3'),
@@ -64,22 +64,22 @@ $('.game').click(function () {
     $('#diceImg2').fadeOut(1);
     $('#diceImg3').fadeOut(1);
     comment1.innerText = "";
-    viewParentChild().then(function (result) {
+    showParentChild().then(function (result) {
         oneChild().then(function (result) {
             nextGame();
         });
     });
 });
 //親と子の表示
-function viewParentChild() {
+function showParentChild() {
     return new Promise(function (resolve) {
         showParent.innerText = "親: " + getPlayerName(parentId);
         showChild.innerText = "子: " + getPlayerName(childId);
         console.log("親：　" + getPlayerName(parentId) + "子：　" + getPlayerName(childId));
         var message1 = "親は" + getPlayerName(parentId) + "です。";
         var message2 = "子は" + getPlayerName(childId) + "です。";
-        viewOnField(message1).then(function (result) {
-            viewOnField(message2).then(function (result) {
+        showOnField(message1).then(function (result) {
+            showOnField(message2).then(function (result) {
                 resolve(null);
             });
         });
@@ -141,13 +141,13 @@ function throwDice() {
             image.src = "./image/" + diceResult[i] + ".png";
         }
         wait().then(function (result) {
-            viewDice().then(function (result) {
+            showDice().then(function (result) {
                 resolve(null);
             });
         });
     });
 
-    function viewDice() {
+    function showDice() {
         return new Promise(function (resolve, reject) {
             $('#diceImg1').fadeIn(1000);
             $('#diceImg2').fadeIn(2000);
@@ -342,11 +342,11 @@ function getPlayerName(num) {
 
 function showMoney() {
     for (var i = 0; i < NUM_PLAYER; i++) {
-        moneyView[i].innerText = "所持金: " + money[i];
+        moneyShow[i].innerText = "所持金: " + money[i];
     }
 }
 
-function viewOnField(message) {
+function showOnField(message) {
     return new Promise(function (resolve) {
         comment1.innerText = message;
         setTimeout(function () {
