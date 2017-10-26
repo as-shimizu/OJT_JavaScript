@@ -65,7 +65,7 @@ $('.game').click(function () {
     $('#diceImg3').fadeOut(1);
     comment1.innerText = "";
     showParentChild().then(function (result) {
-        oneChild().then(function (result) {
+        oneParentVsChild().then(function (result) {
             nextGame();
         });
     });
@@ -98,7 +98,7 @@ function nextGame() {
     });
 }
 //勝負する
-function oneChild() {
+function oneParentVsChild() {
     return new Promise(function (resolve, reject) {
         getLatch().then(function (result) {
             getYaku("親").then(function (result) {
@@ -108,7 +108,7 @@ function oneChild() {
                 $('#diceImg3').fadeOut(1);
                 getYaku("子").then(function (result) {
                     yakuChild=$.extend(true, {}, result);
-                    resultTarn().then(function (result) {
+                    showResult().then(function (result) {
                         resolve(null);
                     });
                 });
@@ -196,7 +196,7 @@ function showChangeMoney(from, to) {
     comment1.innerText = from + "は" + to + "に" + payMoney + "ペリカを支払います";
 }
 //結果を表示
-function resultTarn() {
+function showResult() {
     return new Promise(function (resolve, reject) {
         if (yakuParent.rate > yakuChild.rate) {
             comment1.innerText = "親の勝ちです";
