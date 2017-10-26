@@ -101,11 +101,13 @@ function nextGame() {
 function oneChild() {
     return new Promise(function (resolve, reject) {
         getLatch().then(function (result) {
-            getParentYaku().then(function (result) {
+            getYaku("親").then(function (result) {
+            	yakuParent=$.extend(true, {}, result);
                 $('#diceImg1').fadeOut(1);
                 $('#diceImg2').fadeOut(1);
                 $('#diceImg3').fadeOut(1);
-                getChildYaku().then(function (result) {
+                getYaku("子").then(function (result) {
+                    yakuChild=$.extend(true, {}, result);
                     resultTarn().then(function (result) {
                         resolve(null);
                     });
@@ -114,31 +116,16 @@ function oneChild() {
         });
     });
 }
-//子が役の取得
-function getChildYaku() {
+//役の取得
+function getYaku(who) {
     return new Promise(function (resolve, reject) {
-        comment1.innerText = "子がサイコロを振ります";
+        comment1.innerText = who + "がサイコロを振ります";
         diceResult = [];　 //サイコロ配列を初期化
         throwDice().then(function (result) {
             getNameRate();
             comment1.innerHTML = resultYaku.name;
-            yakuChild = $.extend(true, {}, resultYaku);
-            console.log(yakuChild);
-            resolve(null);
-        });
-    });
-}
-//親が役の取得
-function getParentYaku() {
-    return new Promise(function (resolve, reject) {
-        comment1.innerText = "親がサイコロを振ります";
-        diceResult = [];　 //サイコロ配列を初期化
-        throwDice().then(function (result) {
-            getNameRate();
-            comment1.innerHTML = resultYaku.name;
-            yakuParent = $.extend(true, {}, resultYaku);
-            console.log(yakuParent);
-            resolve(null);
+            console.log(resultYaku);
+            resolve(resultYaku);
         });
     });
 }
@@ -146,12 +133,12 @@ function getParentYaku() {
 function throwDice() {
     return new Promise(function (resolve, reject) {
         for (var i = 0; i < NUM_DICE; i++) {
-            dice.push(Math.floor(Math.random() * 6) + 1);
+            diceResult.push(Math.floor(Math.random() * 6) + 1);
         }
         //サイコロイメージを表示
         for (var i = 0; i < NUM_DICE; i++) {
             var image = diceImg[i]
-            image.src = "./image/" + dice[i] + ".png";
+            image.src = "./image/" + diceResult[i] + ".png";
         }
         wait().then(function (result) {
             viewDice().then(function (result) {
