@@ -78,8 +78,8 @@ function showParentChild() {
         console.log("親：　" + getPlayerName(parentId) + "子：　" + getPlayerName(childId));
         var message1 = "親は" + getPlayerName(parentId) + "です。";
         var message2 = "子は" + getPlayerName(childId) + "です。";
-        showOnField(message1).then(function (result) {
-            showOnField(message2).then(function (result) {
+        sshowMsgAndHoldon(message1,1000).then(function (result) {
+            showMsgAndHoldon(message2,1000).then(function (result) {
                 resolve(null);
             });
         });
@@ -342,11 +342,11 @@ function showMoney() {
     }
 }
 
-function showOnField(message) {
+function showMsgAndHoldon(message, sleepTime) {
     return new Promise(function (resolve) {
         comment1.innerText = message;
         setTimeout(function () {
             resolve(null)
-        }, 1000);
+        }, sleepTime);
     });
 }
