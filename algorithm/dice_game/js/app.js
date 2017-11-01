@@ -166,14 +166,6 @@ function throwDice() {
             }, 3000);
         });
     }
-
-    function wait() {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve(null)
-            }, 1000);
-        });
-    }
 }
 //掛け金を設定
 function getLatch() {
@@ -300,16 +292,16 @@ function getPlayerName(num) {
     var playerName;
     switch (num) {
     case 0:
-        playerName = "Player1";
+        playerName = "兵藤";
         return playerName;
     case 1:
-        playerName = "Player2";
+        playerName = "ワシズ";
         return playerName;
     case 2:
-        playerName = "あなた";
+        playerName = "カイジ";
         return playerName;
     case 3:
-        playerName = "Player3";
+        playerName = "アカギ";
         return playerName;
     }
 }
