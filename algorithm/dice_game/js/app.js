@@ -20,7 +20,7 @@ var yakuChild = new yaku("", 0);
 var resultYaku = new yaku("", 0); //yaku一時保存用
 var end = 0; //ゲーム中は0, ゲーム終了したら1
 var winner;
-var a = 1;
+
 //html上の場所を定義
 var showParent = document.getElementById('showParent');
 var showChild = document.getElementById('showChild');
@@ -111,14 +111,17 @@ function oneParentVsChild() {
                     yakuChild=$.extend(true, {}, result);
                     wait().then(function(result) {
                     	showResult().then(function (result) {
-                    		if (money[parentId] < 0) {
+                        showMoney();
+                        console.log(money[parentId]);
+                        if (money[parentId] < 0) {
                     			comment1.innerText = "親の所持金がなくなりました";
-                    			setTimeout('endGame()', 2000);
-                    		}
-                    		showMoney().then(function (result) {
-                        		resolve(null);
-                        	});
-                        });
+                    			setTimeout(function() {
+                            endGame();
+                            return;
+                          }, 2000);
+                        }
+                        resolve(null);
+                      });
                     });
                 });
             });
@@ -206,11 +209,12 @@ function showResult() {
 	            }
                 payFrom = "子";
                 payTo = "親";
-  	            showPayMoney();
- 	           //支払い
-            	money[childId] = Number(money[childId]) - payMoney;
-            	money[parentId] = Number(money[parentId]) + payMoney;
-            	resolve(null);
+  	            showPayMoney().then(function(result) {
+                  //支払い
+                 	money[childId] = Number(money[childId]) - payMoney;
+                 	money[parentId] = Number(money[parentId]) + payMoney;
+                 	resolve(null);
+                });
         	} else if (yakuParent.rate == yakuChild.rate) {
             	comment1.innerText = "引き分けです";
             	setTimeout('comment1.innerText = "支払いはありません"', 1000);
@@ -224,18 +228,21 @@ function showResult() {
             	}
               payFrom = "親";
               payTo = "子";
-            	showPayMoney();
-            	//支払い
-            	money[parentId] = Number(money[parentId]) - payMoney;
-            	money[childId] = Number(money[childId]) + payMoney;
-              resolve(null);
+              showPayMoney().then(function(result) {
+                //支払い
+                money[childId] = Number(money[childId]) - payMoney;
+                money[parentId] = Number(money[parentId]) + payMoney;
+                resolve(null);
+              });
         	}
     });
     //支払額を表示
     function showPayMoney() {
+      return new Promise(function (resolve) {
         setTimeout(function() {
           comment1.innerText = payFrom + "は" + payTo + "に" + payMoney + "ペリカを支払います"
         },1000);
+      });
     }
 }
 
