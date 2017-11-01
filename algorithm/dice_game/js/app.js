@@ -192,12 +192,10 @@ function showNext() {
         $('#next').fadeIn(1);
     }
 }
-//支払額を表示
-function showPayMoney(from, to) {
-    setTimeOut('comment1.innerText = from + "は" + to + "に" + payMoney + "ペリカを支払います"',1000);
-}
 //結果を表示
 function showResult() {
+    var payFrom = null;
+    var payTo = null;
     return new Promise(function (resolve, reject) {
         	if (yakuParent.rate > yakuChild.rate) {
             	comment1.innerText = "親の勝ちです";
@@ -206,14 +204,17 @@ function showResult() {
             	} else {
 	                payMoney = yakuParent.rate * latch;
 	            }
-  	            showPayMoney("子", "親");
+                payFrom = "子";
+                payTo = "親";
+  	            showPayMoney();
  	           //支払い
             	money[childId] = Number(money[childId]) - payMoney;
             	money[parentId] = Number(money[parentId]) + payMoney;
             	resolve(null);
         	} else if (yakuParent.rate == yakuChild.rate) {
             	comment1.innerText = "引き分けです";
-            	setTimeout('comment1.innerText = "支払いはありません";resolve(null)', 1000);
+            	setTimeout('comment1.innerText = "支払いはありません"', 1000);
+              resolve(null);
         	} else {
             	comment1.innerText = "子の勝ちです";
             	if (yakuParent.rate < -1) {
@@ -221,13 +222,21 @@ function showResult() {
             	} else {
                 	payMoney = yakuChild.rate * latch;
             	}
-            	showPayMoney("親","子");
+              payFrom = "親";
+              payTo = "子";
+            	showPayMoney();
             	//支払い
             	money[parentId] = Number(money[parentId]) - payMoney;
             	money[childId] = Number(money[childId]) + payMoney;
               resolve(null);
         	}
     });
+    //支払額を表示
+    function showPayMoney() {
+        setTimeout(function() {
+          comment1.innerText = payFrom + "は" + payTo + "に" + payMoney + "ペリカを支払います"
+        },1000);
+    }
 }
 
 function endGame() {
@@ -292,24 +301,26 @@ function getPlayerName(num) {
     var playerName;
     switch (num) {
     case 0:
-        playerName = "兵藤";
+        playerName = "Player1";
         return playerName;
     case 1:
-        playerName = "ワシズ";
+        playerName = "Player2";
         return playerName;
     case 2:
-        playerName = "カイジ";
+        playerName = "あなた";
         return playerName;
     case 3:
-        playerName = "アカギ";
+        playerName = "Player3";
         return playerName;
     }
 }
 
 function showMoney() {
-    for (var i = 0; i < NUM_PLAYER; i++) {
+    return new Promise(function (resolve) {
+      for (var i = 0; i < NUM_PLAYER; i++) {
         moneyShow[i].innerText = "所持金: " + money[i];
-    }
+      }
+    });
 }
 
 function showMsgAndHoldon(message, sleepTime) {
