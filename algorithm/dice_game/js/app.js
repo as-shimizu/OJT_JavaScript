@@ -132,7 +132,7 @@ function getYaku(who) {
         diceResult = [];　 //サイコロ配列を初期化
         throwDice().then(function (result) {
             getNameRate();
-            
+
             console.log(resultYaku);
             resolve(resultYaku);
         });
@@ -201,7 +201,7 @@ function showNext() {
     }
 }
 //支払額を表示
-function showChangeMoney(from, to) {
+function showPayMoney(from, to) {
     setTimeOut('comment1.innerText = from + "は" + to + "に" + payMoney + "ペリカを支払います"',1000);
 }
 //結果を表示
@@ -214,14 +214,14 @@ function showResult() {
             	} else {
 	                payMoney = yakuParent.rate * latch;
 	            }
-  	            showChangeMoney("子", "親");
+  	            showPayMoney("子", "親");
  	           //支払い
             	money[childId] = Number(money[childId]) - payMoney;
             	money[parentId] = Number(money[parentId]) + payMoney;
             	resolve(null);
         	} else if (yakuParent.rate == yakuChild.rate) {
             	comment1.innerText = "引き分けです";
-            	setTimeout('comment1.innerText = "支払いはありません"', 1000);
+            	setTimeout('comment1.innerText = "支払いはありません";resolve(null)', 1000);
         	} else {
             	comment1.innerText = "子の勝ちです";
             	if (yakuParent.rate < -1) {
@@ -229,13 +229,13 @@ function showResult() {
             	} else {
                 	payMoney = yakuChild.rate * latch;
             	}
-            	showChangeMoney("親","子"));
+            	showPayMoney("親","子");
             	//支払い
             	money[parentId] = Number(money[parentId]) - payMoney;
             	money[childId] = Number(money[childId]) + payMoney;
+              resolve(null);
         	}
-        });
-	}
+    });
 }
 
 function endGame() {
