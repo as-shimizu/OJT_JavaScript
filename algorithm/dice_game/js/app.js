@@ -20,7 +20,6 @@ var yakuChild = new yaku("", 0);
 var resultYaku = new yaku("", 0); //yaku一時保存用
 var end = 0; //ゲーム中は0, ゲーム終了したら1
 var winner;
-
 //html上の場所を定義
 var showParent = document.getElementById('showParent');
 var showChild = document.getElementById('showChild');
@@ -78,8 +77,8 @@ function showParentChild() {
         console.log("親：　" + getPlayerName(parentId) + "子：　" + getPlayerName(childId));
         var message1 = "親は" + getPlayerName(parentId) + "です。";
         var message2 = "子は" + getPlayerName(childId) + "です。";
-        showMsgAndHoldon(message1,1000).then(function (result) {
-            showMsgAndHoldon(message2,1000).then(function (result) {
+        showMsgAndHoldon(message1, 1000).then(function (result) {
+            showMsgAndHoldon(message2, 1000).then(function (result) {
                 resolve(null);
             });
         });
@@ -102,24 +101,24 @@ function oneParentVsChild() {
     return new Promise(function (resolve, reject) {
         getLatch().then(function (result) {
             getYaku("親").then(function (result) {
-            	yakuParent=$.extend(true, {}, result);
+                yakuParent = $.extend(true, {}, result);
                 $('#diceImg1').hide();
                 $('#diceImg2').hide();
                 $('#diceImg3').hide();
                 getYaku("子").then(function (result) {
-                    yakuChild=$.extend(true, {}, result);
-                    wait().then(function(result) {
-                    	showResult().then(function (result) {
-                        showMoney();
-                        if (money[parentId] < 0) {
-                    			comment1.innerText = "親の所持金がなくなりました";
-                    			setTimeout(function() {
-                            endGame();
-                            return;
-                          }, 2000);
-                        }
-                        resolve(null);
-                      });
+                    yakuChild = $.extend(true, {}, result);
+                    wait().then(function (result) {
+                        showResult().then(function (result) {
+                            showMoney();
+                            if (money[parentId] < 0) {
+                                comment1.innerText = "親の所持金がなくなりました";
+                                setTimeout(function () {
+                                    endGame();
+                                    return;
+                                }, 2000);
+                            }
+                            resolve(null);
+                        });
                     });
                 });
             });
@@ -135,9 +134,9 @@ function getYaku(who) {
             getNameRate();
             comment1.innerText = resultYaku.name;
             console.log(resultYaku);
-            setTimeout(function() {
-              resolve(resultYaku);
-            },1000);
+            setTimeout(function () {
+                resolve(resultYaku);
+            }, 1000);
         });
     });
 }
@@ -200,50 +199,50 @@ function showResult() {
     var payFrom = null;
     var payTo = null;
     return new Promise(function (resolve, reject) {
-        	if (yakuParent.rate > yakuChild.rate) {
-            	comment1.innerText = "親の勝ちです";
-            	if (yakuChild.rate < -1) {
-                	payMoney = yakuChild.rate * latch * (-1);
-            	} else {
-	                payMoney = yakuParent.rate * latch;
-	            }
-                payFrom = "子";
-                payTo = "親";
-  	            showPayMoney().then(function(result) {
-                  //支払い
-                 	money[childId] = Number(money[childId]) - payMoney;
-                 	money[parentId] = Number(money[parentId]) + payMoney;
-                 	resolve(null);
-                });
-        	} else if (yakuParent.rate == yakuChild.rate) {
-            	comment1.innerText = "引き分けです";
-            	setTimeout('comment1.innerText = "支払いはありません"', 1000);
-              resolve(null);
-        	} else {
-            	comment1.innerText = "子の勝ちです";
-            	if (yakuParent.rate < -1) {
-                	payMoney = yakuParent.rate * latch * (-1);
-            	} else {
-                	payMoney = yakuChild.rate * latch;
-            	}
-              payFrom = "親";
-              payTo = "子";
-              showPayMoney().then(function(result) {
+        if (yakuParent.rate > yakuChild.rate) {
+            comment1.innerText = "親の勝ちです";
+            if (yakuChild.rate < -1) {
+                payMoney = yakuChild.rate * latch * (-1);
+            } else {
+                payMoney = yakuParent.rate * latch;
+            }
+            payFrom = "子";
+            payTo = "親";
+            showPayMoney().then(function (result) {
                 //支払い
                 money[childId] = Number(money[childId]) - payMoney;
                 money[parentId] = Number(money[parentId]) + payMoney;
                 resolve(null);
-              });
-        	}
+            });
+        } else if (yakuParent.rate == yakuChild.rate) {
+            comment1.innerText = "引き分けです";
+            setTimeout('comment1.innerText = "支払いはありません"', 1000);
+            resolve(null);
+        } else {
+            comment1.innerText = "子の勝ちです";
+            if (yakuParent.rate < -1) {
+                payMoney = yakuParent.rate * latch * (-1);
+            } else {
+                payMoney = yakuChild.rate * latch;
+            }
+            payFrom = "親";
+            payTo = "子";
+            showPayMoney().then(function (result) {
+                //支払い
+                money[childId] = Number(money[childId]) - payMoney;
+                money[parentId] = Number(money[parentId]) + payMoney;
+                resolve(null);
+            });
+        }
     });
     //支払額を表示
     function showPayMoney() {
-      return new Promise(function (resolve) {
-        setTimeout(function() {
-          comment1.innerText = payFrom + "は" + payTo + "に" + payMoney + "ペリカを支払います"
-          resolve(null);
-        },1000);
-      });
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                comment1.innerText = payFrom + "は" + payTo + "に" + payMoney + "ペリカを支払います"
+                resolve(null);
+            }, 1000);
+        });
     }
 }
 
@@ -303,31 +302,30 @@ function getNameRate() {
         resultYaku.rate = -1;
     }
 }
-
 //プレーヤー番号から名前を取得
 function getPlayerName(num) {
     var playerName;
     switch (num) {
     case 0:
-        playerName = "Player1";
+        playerName = "兵藤";
         return playerName;
     case 1:
-        playerName = "Player2";
+        playerName = "ワシズ";
         return playerName;
     case 2:
-        playerName = "あなた";
+        playerName = "カイジ";
         return playerName;
     case 3:
-        playerName = "Player3";
+        playerName = "アカギ";
         return playerName;
     }
 }
 
 function showMoney() {
     return new Promise(function (resolve) {
-      for (var i = 0; i < NUM_PLAYER; i++) {
-        moneyShow[i].innerText = "所持金: " + money[i];
-      }
+        for (var i = 0; i < NUM_PLAYER; i++) {
+            moneyShow[i].innerText = "所持金: " + money[i];
+        }
     });
 }
 
@@ -339,7 +337,6 @@ function showMsgAndHoldon(message, sleepTime) {
         }, sleepTime);
     });
 }
-
 
 function wait() {
     return new Promise(function (resolve, reject) {
