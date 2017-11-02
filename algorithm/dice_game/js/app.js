@@ -44,11 +44,11 @@ $('#moneyDecide').click(function () {
         money[i] = Number(document.getElementById('cash').value);
     }
     showMoney();　 //所持金を表示
-    $('#start').fadeOut(1); //startを隠す　
+    $('#start').hide(); //startを隠す　
     $('#field').fadeIn(500); //fieldを表示
 });
 $('.game').click(function () {
-    $('#next').fadeOut(1);
+    $('#next').hide();
     //親と子の設定
     if (childId == NUM_PLAYER - 1) {
         parentId++;
@@ -60,9 +60,9 @@ $('.game').click(function () {
         childId++;
     }
     //サイコロ画像とコメントの削除
-    $('#diceImg1').fadeOut(1);
-    $('#diceImg2').fadeOut(1);
-    $('#diceImg3').fadeOut(1);
+    $('#diceImg1').hide();
+    $('#diceImg2').hide();
+    $('#diceImg3').hide();
     comment1.innerText = "";
     showParentChild().then(function (result) {
         oneParentVsChild().then(function (result) {
@@ -104,15 +104,14 @@ function oneParentVsChild() {
             getYaku("親").then(function (result) {
             	yakuParent=$.extend(true, {}, result);
             	comment1.innerText = "!!!!!";
-                $('#diceImg1').fadeOut(1);
-                $('#diceImg2').fadeOut(1);
-                $('#diceImg3').fadeOut(1);
+                $('#diceImg1').hide();
+                $('#diceImg2').hide();
+                $('#diceImg3').hide();
                 getYaku("子").then(function (result) {
                     yakuChild=$.extend(true, {}, result);
                     wait().then(function(result) {
                     	showResult().then(function (result) {
                         showMoney();
-                        console.log(money[parentId]);
                         if (money[parentId] < 0) {
                     			comment1.innerText = "親の所持金がなくなりました";
                     			setTimeout(function() {
@@ -250,9 +249,9 @@ function endGame() {
     end = 1;
     showMoney();
     //サイコロ画像の削除
-    $('#diceImg1').fadeOut(1);
-    $('#diceImg2').fadeOut(1);
-    $('#diceImg3').fadeOut(1);
+    $('#diceImg1').hide();
+    $('#diceImg2').hide();
+    $('#diceImg3').hide();
     setTimeout('comment1.innerText = "ゲーム終了"', 1000);
     winner = getWinPlayer();
     setTimeout('showWinner()', 2000);
