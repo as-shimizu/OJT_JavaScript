@@ -229,8 +229,8 @@ function showResult() {
             payTo = "子";
             showPayMoney().then(function (result) {
                 //支払い
-                money[childId] = Number(money[childId]) - payMoney;
-                money[parentId] = Number(money[parentId]) + payMoney;
+                money[childId] = Number(money[childId]) + payMoney;
+                money[parentId] = Number(money[parentId]) - payMoney;
                 resolve(null);
             });
         }
@@ -264,7 +264,7 @@ function showWinner() {
 
 function getWinPlayer() {
     var sortMoney = new Array(NUM_PLAYER);
-    sortMoney = bubleSort(money);
+    sortMoney = bubbleSort(money);
     for (var i = 0; i < NUM_PLAYER; i++) {
         if (money[i] == sortMoney[NUM_PLAYER - 1]) {
             winner = i;
