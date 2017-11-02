@@ -103,7 +103,6 @@ function oneParentVsChild() {
         getLatch().then(function (result) {
             getYaku("親").then(function (result) {
             	yakuParent=$.extend(true, {}, result);
-            	comment1.innerText = "!!!!!";
                 $('#diceImg1').hide();
                 $('#diceImg2').hide();
                 $('#diceImg3').hide();
@@ -134,9 +133,11 @@ function getYaku(who) {
         diceResult = [];　 //サイコロ配列を初期化
         throwDice().then(function (result) {
             getNameRate();
-
+            comment1.innerText = resultYaku.name;
             console.log(resultYaku);
-            resolve(resultYaku);
+            setTimeout(function() {
+              resolve(resultYaku);
+            },1000);
         });
     });
 }
@@ -240,6 +241,7 @@ function showResult() {
       return new Promise(function (resolve) {
         setTimeout(function() {
           comment1.innerText = payFrom + "は" + payTo + "に" + payMoney + "ペリカを支払います"
+          resolve(null);
         },1000);
       });
     }
